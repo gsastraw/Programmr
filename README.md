@@ -65,12 +65,16 @@ Open the `server` and `client` in separate VSCode workspaces or open the combine
 
 ### Pages
 
-* Home: 1-3 sentences describing what the page displays and what a user can do
-* Shopping cart: ...
+* Login: A login form requiring a correct email and password. 
+* Registration: Allows the user to create an account with an email, password, first name, and last name.
+* Profile Page: Allows the user to view and update their profile information, containing a biography, profile picture, location, as well as interests. There is also an ability to update the location range that the search algorithm looks at for matches. There is also an ability to delete the account that is currently logged in. 
+* Home: Allows the user to look for matches. The matches are displayed as cards with information such as their profile picture, distance from their current location, their location, and their interests.
+* Matched With: Allows the user to look at their matches and message them. In the same window, the user can click on a match and begin chatting with them.
+* Chat: Allows the user to communicate with the match they have chosen in the "Matched With" page. 
 
 ### Entity-Relationship (ER) Diagram
 
-![ER Diagram](./images/er_diagram.png)
+![ER Diagram](./images/Programmr.png)
 
 ## Teaser (MS3)
 
