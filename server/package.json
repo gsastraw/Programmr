@@ -6,10 +6,10 @@
   },
   "private": true,
   "description": "Template for ExpressJS API with Mongoose for Web and Mobile Engineering (DIT341)",
-  "main": "./app.js",
+  "main": "./src/app.js",
   "scripts": {
-    "start": "node ./app.js",
-    "dev": "nodemon ./app.js",
+    "start": "node ./src/app.js",
+    "dev": "nodemon ./src/app.js",
     "lint": "eslint .",
     "test": "cross-env-shell MONGODB_URI=mongodb://localhost:27017/serverTestDB \"npm run newman-server\"",
     "ci-test": "npm run newman-server",
