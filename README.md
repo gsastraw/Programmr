@@ -74,7 +74,7 @@ The purpose of this dating app is to link fellow SEM programmers together. A use
 
 ### Entity-Relationship (ER) Diagram
 
-![ER Diagram](./images/Programmr.png)
+![ER Diagram](./images/er_diagram.png)
 
 ## Teaser (MS3)
 
