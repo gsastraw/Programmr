@@ -24,9 +24,12 @@ const matchSchema = new mongoose.Schema({
         type: String,
         enum: ['complete', 'incomplete']
     },
-    profiles: [
-        {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
-    ],
+    swiper: {
+        type: mongoose.Schema.Types.ObjectId, ref: 'User'
+    },
+    swipee: {
+        type: mongoose.Schema.Types.ObjectId, ref: 'User'
+    },
     messages: [messageSchema]
 },
 {
