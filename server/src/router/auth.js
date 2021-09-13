@@ -1,17 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/login', (req, res) => {
+// TODO
+router.get('/google');
 
-});
-
-router.post('/logout', (req, res) => {
-
-});
-
-router.post('/register', (req, res) => {
-
-});
+// TODO
+router.get('/google/callback');
 
 module.exports = {
     base: "/auth",
