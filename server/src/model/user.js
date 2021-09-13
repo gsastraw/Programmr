@@ -35,7 +35,7 @@ userProfileSchema.virtual('fullName').get(() => {
 });
 
 const userSchema = new mongoose.Schema({
-    email: {
+    googleId: {
         type: String,
         required: true,
     },
