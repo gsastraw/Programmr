@@ -61,7 +61,7 @@ Open the `server` and `client` in separate VSCode workspaces or open the combine
 
 ### Purpose
 
-2-5 sentences describing what the system does
+The purpose of this dating app is to link fellow SEM programmers together. A user can match or unmatch with another user, showcase interests, and communicate with others through a chat system. A user can only match with another user, but not with groups of users.
 
 ### Pages
 
