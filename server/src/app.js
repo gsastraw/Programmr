@@ -4,9 +4,9 @@ const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 const history = require('connect-history-api-fallback');
+const passport = require('passport');
 
 const router = require('./router');
-const model = require('./model');
 
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/programmr';
 const port = process.env.PORT || 3000;
@@ -26,18 +26,17 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }, 
 
 const app = express();
 
-app.use(express.static(client));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('dev'));
 
 app.options('*', cors());
 app.use(cors());
-app.use(history());
 
-app.use(router.Auth.base, router.Auth.handler);
-app.use(router.User.base, router.User.handler);
-app.use(router.Match.base, router.Match.handler);
+app.use(express.static(client));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 const env = app.get('env');
 
@@ -56,6 +55,12 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.json(err_res);
 });
+
+app.use(router.Auth.base, router.Auth.handler);
+app.use(router.User.base, router.User.handler);
+app.use(router.Match.base, router.Match.handler);
+
+app.use(history());
 
 app.listen(port, (err) => {
     if (err) {

@@ -10,9 +10,9 @@ router.get('', (req, res) => {
 router.get('/google',
   passport.authenticate('google', { scope: ['email', 'profile'] }));
 
-router.get('/google/callback', passport.authenticate('google', {
-    failureRedirect: '/login'
-}));
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+    res.redirect('/');
+});
 
 router.get('/logout', (req, res) => {
     req.logout();
