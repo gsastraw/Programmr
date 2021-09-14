@@ -11,15 +11,18 @@ router.post('/', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-    Match.find()
+    res.json({"matches": Match});
 });
 
 router.get('/:matchId', (req, res) => {
-
+    res.json(Match[req.params.matchId]);
 });
 
 router.delete('/:matchId', (req, res) => {
-
+    var id = req.params.matchId;
+    var Match = Match[id];
+    delete Match[id];
+    res.json(Match);
 });
 
 router.post('/:matchId/conversation', (req, res) => {
