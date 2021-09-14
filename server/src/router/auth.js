@@ -1,11 +1,22 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
+require('../auth')
 
-// TODO
-router.get('/google');
+router.get('', (req, res) => {
+    res.send({ message: "Log in to access your account!" });
+});
 
-// TODO
-router.get('/google/callback');
+router.get('/google',
+  passport.authenticate('google', { scope: ['email', 'profile'] }));
+
+router.get('/google/callback', passport.authenticate('google', {
+    failureRedirect: '/login'
+}));
+
+router.get('/logout', (req, res) => {
+    req.logout();
+});
 
 module.exports = {
     base: "/auth",
