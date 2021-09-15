@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Match = require('../model/match');
 
-router.post('/', (req, res) => {
+router.post('/', (req, res) => { // not sure if this works
     var match = new Match(req.body);
     match.save(function(err,match){
         if (err) {return next(err);}
@@ -15,14 +15,29 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:matchId', (req, res) => {
-    res.json(Match[req.params.matchId]);
+    let matchId = req.params.matchId;
+    Match.findById(matchId, (err, match) => {
+        if (err) {
+            return res.status(404).send({ 'message': 'Match not found!', 'error': err });
+        }
+        if (match === null) {
+            return res.status(404).send({ 'message': 'Match not found!', 'error': err });
+        }
+        res.json(match);
+    });
 });
 
 router.delete('/:matchId', (req, res) => {
-    var id = req.params.matchId;
-    var Match = Match[id];
-    delete Match[id];
-    res.json(Match);
+    let matchId = req.params.matchId;
+    Match.findOneAndDelete({_id: matchId}, (err, match) => {
+        if (err) {
+            return res.status(404).send({ 'message': 'The match you want to delete could not be found! Something went wrong.', 'error': err });
+        }
+        if (match === null) {
+            return res.status(404).send({ 'message': 'The match you want to delete could not be found! Something went wrong.', 'error': err });
+        }
+        res.json(match);
+    });
 });
 
 router.post('/:matchId/conversation', (req, res) => {
