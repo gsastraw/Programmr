@@ -2,16 +2,46 @@ const express = require('express');
 const router = express.Router();
 const Match = require('../model/match');
 
-router.post('/', (req, res) => { // not sure if this works
+router.post('/', (req, res) => { // TODO: not sure if this works
     var match = new Match(req.body);
     match.save(function(err,match){
         if (err) {return next(err);}
         res.status(201).json(match);
-    })
+    });
 });
 
-router.get('/', (req, res) => {
-    res.json({"matches": Match});
+router.get('/', (req, res) => { // Get a list of all matches with pagination
+    Match.find((err, matches) => {
+        if (err) {
+            return res.status(404).send({ 'message': 'Matches not found!', 'error': err });
+        } 
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const results = {};
+        let startIndex = (pageNumber - 1) * limit;
+        let endIndex = pageNumber * limit;
+
+        if (endIndex < matches.length) {
+            results.next = {
+                pageNumber: page + 1,
+                limit: limit
+            }
+        }
+
+        if (startIndex > 0) {
+            results.previous = {
+                page: page - 1,
+                limit: limit
+            }
+        }
+
+        try {
+            results.fetchedMatches = matches.slice(startIndex, endIndex);
+            res.json(results);
+        } catch (err) {
+            res.status(404).send({ 'message': 'Matches could not be retrieved!' });
+        }
+    });
 });
 
 router.get('/:matchId', (req, res) => {
