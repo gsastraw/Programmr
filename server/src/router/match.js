@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Match = require('../model/match');
+const UserService = require('../services/userService');
 
 router.post('/', (req, res) => { // TODO: not sure if this works
     var match = new Match(req.body);
@@ -11,37 +12,18 @@ router.post('/', (req, res) => { // TODO: not sure if this works
 });
 
 router.get('/', (req, res) => { // Get a list of all matches with pagination
-    Match.find((err, matches) => {
-        if (err) {
-            return res.status(404).send({ 'message': 'Matches not found!', 'error': err });
-        } 
-        const page = parseInt(req.query.page);
+    try {
         const limit = parseInt(req.query.limit);
-        const results = {};
-        let startIndex = (pageNumber - 1) * limit;
-        let endIndex = pageNumber * limit;
-
-        if (endIndex < matches.length) {
-            results.next = {
-                pageNumber: page + 1,
-                limit: limit
-            }
-        }
-
-        if (startIndex > 0) {
-            results.previous = {
-                page: page - 1,
-                limit: limit
-            }
-        }
-
-        try {
-            results.fetchedMatches = matches.slice(startIndex, endIndex);
-            res.json(results);
-        } catch (err) {
-            res.status(404).send({ 'message': 'Matches could not be retrieved!' });
-        }
-    });
+        const skip = parseInt(req.query.skip);
+        const matches = ((limit = 0, skip = 0) =>  {
+            return Match.find()
+                        .skip(skip)
+                        .limit(limit);
+        });
+        return res.status(200).json(matches);
+    } catch(err){ 
+        return res.status(500).json(err);
+    }
 });
 
 router.get('/:matchId', (req, res) => {
