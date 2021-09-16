@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Match = require('../model/match');
-const UserService = require('../services/userService');
 
 router.post('/', (req, res) => { // TODO: not sure if this works
     var match = new Match(req.body);
@@ -14,8 +13,8 @@ router.post('/', (req, res) => { // TODO: not sure if this works
 router.get('/', (req, res) => { // Get a list of all matches with pagination
     try {
         const matches = ((pageSize, page) =>  {
-        const pageSize = parseInt(req.query.limit || 1);
-        const page = parseInt(req.query.skip || 1);
+            pageSize = parseInt(req.query.limit || 1);
+            page = parseInt(req.query.skip || 1);
             return Match.find()
                         .skip(pageSize)
                         .limit(page);

@@ -6,7 +6,7 @@ const GOOGLE_CLIENT_KEY = '1053310788215-dotkr3r02rmma7cdhvmutjf62ttpaj0n.apps.g
 const GOOGLE_CLIENT_SECRET = 'xdO3ZMl-QHHmqSmOr1gIWXZs';
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {

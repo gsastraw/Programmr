@@ -2,37 +2,34 @@ const mongoose = require('mongoose');
 const findOrCreate = require('mongoose-findorcreate')
 
 const userProfileSchema = new mongoose.Schema({
-    name: {
-        first: {
-            type: String,
-            required: true
-        },
-        last: {
-            type: String,
-            required: true
-        }
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
+        type: String,
+        required: true
     },
     dob: {
         type: Date,
         required: true,
     },
     location: {
-        type: {
-            type: String,
-            enum: ['Point'],
+        long: {
+            type: Number,
             required: true
         },
-        coordinates: {
-            type: [Number],
-            required:true
+        lat: {
+            type: Number,
+            required: true
         }
     },
     bio: String,
-    avatar: String
+    avatarUrl: String
 });
 
 userProfileSchema.virtual('fullName').get(() => {
-    return this.name.first + ' ' + this.name.last;
+    return this.firstName + ' ' + this.lastName;
 });
 
 const userSchema = new mongoose.Schema({
