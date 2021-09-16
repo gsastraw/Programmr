@@ -31,10 +31,6 @@ passport.use(new GoogleStrategy({
     }
 ));
 
-router.get('', (req, res) => {
-    res.send({ message: "Log in to access your account!" });
-});
-
 router.get('/google',
   passport.authenticate('google', { scope: ['email', 'profile'] }));
 
