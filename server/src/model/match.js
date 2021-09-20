@@ -22,14 +22,11 @@ const messageSchema = new mongoose.Schema({
 const matchSchema = new mongoose.Schema({
     status: {
         type: String,
-        enum: ['complete', 'incomplete', 'rejected']
+        enum: ['complete', 'incomplete']
     },
-    swiper: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'User'
-    },
-    swipee: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'User'
-    },
+    profiles: [
+        {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+    ],
     messages: [messageSchema]
 },
 {
