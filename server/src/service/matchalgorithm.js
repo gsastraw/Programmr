@@ -1,41 +1,28 @@
-const MatchService = require('../service/match');
 const UserService = require('../service/user');
 const User = require('../model/user');
 
 const fetchUsersBasedOffLocation = async (id) => {
-    // try {
-    //     const user = await User.findById(id, 'location.long location.lat').exec();
-    //     const location = getLocation();
-    // } catch (err) {
+    // Fetches all users IDs with location values greater than or equal to the currently logged in user's location 
+    const user = UserService.getUser(id);
+    const potentialUsers = await User.find( { googleId: { $ne: id } } )
+                               .where('location.long').gte(user.location.long)
+                               .where('location.lat').gte(user.location.lat)
+                               .select('googleId')
+                               .exec();
 
-    // }
-}
+    if (!id) {
+        throw 'Id not defined';
+    }
+        
+    if (!potentialUsers) {
+        return Promise.reject("Could not find any users!");
+    } 
 
-const getLocation = () => {
-    if (!navigator.geolocation) {
-        throw "Geolocation API not supported by this browser";
-    } else {
-        return navigator.geolocation.getCurrentPosition(success, failure);
-    }    
-}
-
-const success = (position, id) => {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-
-    User.updateOne({ id: id}, { '$set': {
-        'location.$.latitude': latitude,
-        'location.$.longitude': longitude
-    }})
-}
-
-const failure = () => {
-    throw "Location could not be found!";
+    return potentialUsers;
 }
 
 const MatchAlgorithm = {
     fetchUsersBasedOffLocation,
-    getLocation
 }
   
 module.exports = MatchAlgorithm;

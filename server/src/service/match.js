@@ -2,35 +2,35 @@ const Match = require('../model/match');
 const User = require('../model').User;
 const UserService = require('../service/user');
 
-const checkIfMatched = async (userId, matchedId) => {
-    try {
-        let currentUser = await User.findOne({ liked: matchedId } );
-        let matchedUser = await User.findOne( { liked: userId } );
-
-        if (!currentUser || !matchedUser) {
-            return Promise.reject("Could not find a match between these two users!")
-        }
-    } catch (err) {
-        await createMatch(userId, matchedId);
-    }
-}
-
 const createMatch = async (userId, matchedId) => {
+    /* When the suggested IDs are fetched from the match algorithm, this method first checks to see if the match already exists in the system.
+       If the match already exists, a rejected Promise is returned. Otherwise, a Match is created that ties the user ID and the matched ID together.
+    */
     try {
-        let currentUser = await UserService.getUser(userId);
-        let matchedUser = await UserService.getUser(matchedId);
+        const currentUser = await UserService.getUser(userId);
+        const matchedUser = await UserService.getUser(matchedId);
 
         if (!currentUser || !matchedUser) {
             return Promise.reject(`Could not create a match between these two IDs!`)
         }
+
+        if (checkIfMatchAlreadyExists(userId, matchedId)) {
+            return Promise.reject("Match was already created!");
+        }
     } catch (err) {
-        await Match.create({ profiles: userId, matchedId });
+        Match.create({ profiles: userId, matchedId });
     }
 }
 
+const checkIfMatchAlreadyExists = (userId, matchedId) => {
+    // A helper function that returns true if the match.profiles contains the swiper's ID and the swipee's ID, else returns false
+    const match = Match.findOne( {  } ).exec();
+    return match.profiles.includes(userId, matchedId);
+}
+
 const MatchService = {
-    checkIfMatched,
-    createMatch
+    createMatch,
+    checkIfMatchAlreadyExists
 };
 
 module.exports = MatchService;
