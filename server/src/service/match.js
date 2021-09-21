@@ -26,6 +26,20 @@ const createMatch = async (userId, matchedId) => {
     }
 }
 
+const fetchMatchById = async (id) => {
+    if (!id) {
+        throw 'ID could not be identified';
+    }
+
+    const match = await Match.findById(id);
+
+    if (!match) {
+        return Promise.reject('Match could not be found!');
+    } else {
+        return match;
+    }
+}
+
 const checkIfMatchAlreadyExists = (userId, matchedId) => {
     // A helper function that returns true if the match.profiles contains the swiper's ID and the swipee's ID, else returns false
     const match = Match.find( {  } ).exec();
