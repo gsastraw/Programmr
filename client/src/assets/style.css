@@ -15,55 +15,67 @@ body {
     background-size: cover;
 }
 
-#btn_message {
-    margin-bottom: 1em;
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.square-logo {
-    width: 175px;
-    left: 92px;
-    top: 89px;
+.programmr-logo {
+    width: 15%;
+    align-items: center;
     height: auto;
-    position: absolute;
-}
-
-.fade-in-image {
-    animation: fadeIn 2s;
-    -webkit-animation: fadeIn 2s;
-    -moz-animation: fadeIn 2s;
 }
 
 .welcome-to-programmr {
     position: absolute;
-    /* left: 21.25%;
-    right: 7.71%;
-    top: 12.89%;
-    bottom: 78.91%; */
+    display: flex;
+    top: 45%;
+    width: 15%;
+    height: auto;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-    font-family: Bungee;
+    font-family: Avenir;
     font-style: normal;
-    font-weight: normal;
+    font-weight: bold;
     font-size: 72px;
-    line-height: 86px;
-    text-align: center;
+    font-weight: bold;
+    line-height: 64px;
+    text-align: match-parent;
 
     color: #A394FB;
 }
 
-@keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
+.button_slide {
+    flex: 1;
+    max-height: 20%;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    width: 20%;
+    height: 8%;
+    transform: translate(-50%, -50%);
+    color: #FFF;
+    border: 2px solid rgb(216, 2, 134);
+    border-radius: 0px;
+    padding: 4px 8px;
+    display: inline-block;
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 0 #D80286;
+    -webkit-transition: ease-out 0.5s;
+    -moz-transition: ease-out 0.5s;
+    transition: ease-out 0.5s;
 }
-  
-@-moz-keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
+
+.slide_right:hover {
+    box-shadow: inset 400px 0 0 0 #D80286;
+    transition: 0.5s;
 }
-  
-@-webkit-keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
-}
+
 
 
 
