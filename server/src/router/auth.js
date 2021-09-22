@@ -32,7 +32,9 @@ passport.use(new GoogleStrategy({
 ));
 
 router.get('/google',
-  passport.authenticate('google', { scope: ['email', 'profile'] }));
+  passport.authenticate('google', { scope: ['email', 'profile'] }), (req, res) => {
+      res.append('Access-Control-Allow-Origin', 'true');
+  });
 
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
     res.redirect('/');

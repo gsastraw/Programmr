@@ -1,0 +1,71 @@
+/* fonts */
+#app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #000000;
+}
+/* body */
+body {
+    background: url("../assets/loginbackground.svg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#btn_message {
+    margin-bottom: 1em;
+}
+
+.square-logo {
+    width: 175px;
+    left: 92px;
+    top: 89px;
+    height: auto;
+    position: absolute;
+}
+
+.fade-in-image {
+    animation: fadeIn 2s;
+    -webkit-animation: fadeIn 2s;
+    -moz-animation: fadeIn 2s;
+}
+
+.welcome-to-programmr {
+    position: absolute;
+    /* left: 21.25%;
+    right: 7.71%;
+    top: 12.89%;
+    bottom: 78.91%; */
+
+    font-family: Bungee;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 72px;
+    line-height: 86px;
+    text-align: center;
+
+    color: #A394FB;
+}
+
+@keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+  
+@-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+  
+@-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+
+
+
+

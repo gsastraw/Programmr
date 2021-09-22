@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <b-jumbotron header="DIT341 Frontend" lead="Welcome to your DIT341 Frontend Vue.js App">
-      <b-button class="btn_message" variant="primary" v-on:click="getMessage()" >Get Message from Server</b-button>
-      <p>Message from the server:<br/>
-      {{ message }}</p>
-    </b-jumbotron>
+  <div class="body">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <b-img class="square-logo" :src="require('../assets/squarelogo.svg')"></b-img>
+      <b-button class="btn-message" variant="primary" v-on:click="login()">"Login to Google!"</b-button>
+      <p>Message from the server: {{ message }}</p>
   </div>
 </template>
-
 <script>
 // @ is an alias to /src
 import { Api } from '@/Api'
@@ -28,13 +26,18 @@ export default {
         .catch(error => {
           this.message = error
         })
+    },
+    login() {
+      const route = async () => {
+        return await Api.get('/auth/google')
+      }
+      console.log(route)
+      return route()
     }
   }
 }
 </script>
 
 <style>
-.btn_message {
-  margin-bottom: 1em;
-}
+@import url("../assets/style.css");
 </style>
