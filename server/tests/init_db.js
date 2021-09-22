@@ -28,7 +28,6 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }, 
         __v: 0
     }, () => {
         console.log(`Inserted sample user into database: ${mongoURI}`)
-        process.exit(0);
     });
 
     mongoose.connection.db.collection("users").insertOne({
