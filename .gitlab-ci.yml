@@ -27,7 +27,7 @@ test:
     - name: mvertes/alpine-mongo:latest
       alias: mongo
   variables:
-    MONGODB_URI: "mongodb://mongo:27017/serverTestDB"
+    MONGODB_URI: "mongodb://mongo:27017/programmr"
   script:
     - cd server
     - npm run ci-test
