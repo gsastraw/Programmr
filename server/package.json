@@ -11,12 +11,12 @@
     "start": "node ./src/app.js",
     "dev": "nodemon ./src/app.js",
     "lint": "eslint .",
-    "test": "cross-env-shell MONGODB_URI=mongodb://localhost:27017/serverTestDB \"npm run newman-server\"",
+    "test": "cross-env-shell MONGODB_URI=mongodb://localhost:27017/programmr \"npm run newman-server\"",
     "ci-test": "npm run newman-server",
-    "newman-server": "cross-env-shell PORT=3001 \"npm run dropdb && run-p --race start newman-wait\"",
-    "newman-wait": "wait-on http://localhost:3001/api && npm run newman",
-    "newman": "newman run ./tests/server.postman_collection.json --env-var host=http://localhost:3001",
-    "dropdb": "node ./tests/dropdb.js"
+    "newman-server": "cross-env-shell PORT=3001 \"npm run init-db && run-p --race start newman-wait\"",
+    "newman-wait": "wait-on http://localhost:3001/ && npm run newman",
+    "newman": "newman run ./tests/ProgrammrAPITest.postman_collection.json --env-var host=http://localhost:3001",
+    "init-db": "node ./tests/init_db.js"
   },
   "repository": {
     "type": "git",

@@ -56,6 +56,13 @@ app.use((err, req, res, next) => {
     res.json(err_res);
 });
 
+/**
+ * Used to check if the server is online before running tests
+ */
+app.head('/', (req, res) => {
+    res.sendStatus(200)
+})
+
 app.use(router.Auth.base, router.Auth.handler);
 app.use(router.User.base, router.User.handler);
 app.use(router.Match.base, router.Match.handler);
