@@ -12,7 +12,7 @@ export default {
   name: 'About',
   methods: {
     mainmenu() {
-      this.$router.push('/home').catch(error => {
+      this.$router.push('/').catch(error => {
         console.log(error)
       })
     }
