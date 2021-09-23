@@ -29,6 +29,10 @@ const listUsers = async (page = DEFAULT_PAGE, pageSize = DEFAULT_PAGE_SIZE) => {
         .exec();
 };
 
+const deleteUsers = async () => {
+    return User.deleteMany({}).exec();
+}
+
 const getUser = async (id) => {
     if (!id) {
         return Promise.reject(new HttpError("Id not defined", 400));
@@ -113,6 +117,7 @@ const UserService = {
     DEFAULT_PAGE,
     DEFAULT_PAGE_SIZE,
     listUsers,
+    deleteUsers,
     getUser,
     createUser,
     deleteUser,

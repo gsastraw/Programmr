@@ -53,6 +53,24 @@ router.get('', (req, res) => {
         });
 });
 
+router.delete('', (req, res) => {
+    UserService.deleteUsers()
+        .then(_ => {
+            return res.sendStatus(200);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
+                message: error
+            });
+        });
+})
+
 router.get('/:userId', (req, res) => {
     UserService.getUser(req.params.userId)
         .then(user => {
@@ -60,8 +78,6 @@ router.get('/:userId', (req, res) => {
         })
         .catch(error => {
             if (error instanceof HttpError) {
-                console.log(error.message);
-                console.log(error.statusCode);
                 return res.status(error.statusCode).send({
                     message: error.message
                 });
