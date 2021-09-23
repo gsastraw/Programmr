@@ -4,7 +4,9 @@ const router = express.Router();
 const UserService = require('../service').UserService;
 const UserCommands = require('../command').UserCommands;
 
-router.post('', (req, res) => {
+const HttpError = require('../httpError');
+
+router.post('', async (req, res) => {
     const {error, _} = UserCommands.createUser.validate(req.body);    
 
     if (error) {
@@ -18,7 +20,13 @@ router.post('', (req, res) => {
             return res.sendStatus(200);
         })
         .catch(error => {
-            return res.status(400).send({
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
                 message: error
             });
         });
@@ -33,7 +41,13 @@ router.get('', (req, res) => {
             return res.json(users);
         })
         .catch(error => {
-            return res.status(400).send({
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
                 message: error
             });
         });
@@ -45,7 +59,15 @@ router.get('/:userId', (req, res) => {
             return res.json(user);
         })
         .catch(error => {
-            return res.status(400).send({
+            if (error instanceof HttpError) {
+                console.log(error.message);
+                console.log(error.statusCode);
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
                 message: error
             });
         });
@@ -57,7 +79,13 @@ router.delete('/:userId', (req, res) => {
             return res.sendStatus(200);
         })
         .catch(error => {
-            return res.status(400).send({
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
                 message: error
             });
         });
@@ -77,7 +105,13 @@ router.post('/:userId/profile', (req, res) => {
             return res.sendStatus(200);
         })
         .catch(error => {
-            return res.status(400).send({
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
                 message: error
             });
         });
@@ -89,7 +123,13 @@ router.get('/:userId/profile', (req, res) => {
             return res.json(userProfile);
         })
         .catch(error => {
-            return res.status(400).send({
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
                 message: error
             });
         });
@@ -109,7 +149,13 @@ router.patch('/:userId/profile', (req, res) => {
             return res.sendStatus(200);
         })
         .catch(error => {
-            return res.status(400).send({
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
                 message: error
             });
         });

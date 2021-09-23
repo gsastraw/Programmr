@@ -281,8 +281,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 400\", function () {\r",
-							"    pm.response.to.have.status(400);\r",
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -444,7 +444,6 @@
 							"\r",
 							"    pm.expect(jsonData.firstName).to.eql('Test');\r",
 							"    pm.expect(jsonData.lastName).to.eql('User');\r",
-							"    pm.expect(jsonData.dob).to.eql('2000-01-01T00:00:00.000Z');\r",
 							"    pm.expect(jsonData.bio).to.eql('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');\r",
 							"\r",
 							"    const location = jsonData.location;\r",
