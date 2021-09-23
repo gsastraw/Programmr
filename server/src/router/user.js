@@ -6,7 +6,7 @@ const UserCommands = require('../command').UserCommands;
 
 const HttpError = require('../httpError');
 
-router.post('', async (req, res) => {
+router.post('', (req, res) => {
     const {error, _} = UserCommands.createUser.validate(req.body);    
 
     if (error) {
