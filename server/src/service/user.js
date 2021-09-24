@@ -1,25 +1,26 @@
 const _ = require('lodash');
 
 const User = require('../model').User;
+const HttpError = require('../httpError');
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_PAGE_SIZE = 20;
 
 const listUsers = async (page = DEFAULT_PAGE, pageSize = DEFAULT_PAGE_SIZE) => {
     if (isNaN(page)) {
-        return Promise.reject(`Page must be a number (value = ${page})`);
+        return Promise.reject(new HttpError(`Page must be a number (value = ${page})`, 400));
     }
 
     if (isNaN(pageSize)) {
-        return Promise.reject(`Page size must be a number (value = ${pageSize})`);
+        return Promise.reject(new HttpError(`Page size must be a number (value = ${pageSize})`, 400));
     }
 
     if (page < 1) {
-        return Promise.reject(`Page can't be lower than 1 (value = ${page})`);
+        return Promise.reject(new HttpError(`Page can't be lower than 1 (value = ${page})`, 400));
     }
 
     if (pageSize < 0) {
-        return Promise.reject(`Page size can't be lower than 0 (value = ${pageSize})`);
+        return Promise.reject(new HttpError(`Page size can't be lower than 0 (value = ${pageSize})`, 400));
     }
 
     return User.find()
@@ -28,15 +29,19 @@ const listUsers = async (page = DEFAULT_PAGE, pageSize = DEFAULT_PAGE_SIZE) => {
         .exec();
 };
 
+const deleteUsers = async () => {
+    return User.deleteMany({}).exec();
+}
+
 const getUser = async (id) => {
     if (!id) {
-        throw "Id not defined";
+        return Promise.reject(new HttpError("Id not defined", 400));
     }
 
     const user = await User.findOne({ googleId: id }, { '_id': 0, '__v': 0 }).exec(); 
 
     if (!user) {
-        return Promise.reject(`User with id '${id}' not found`)
+        return Promise.reject(new HttpError(`User with id '${id}' not found`, 404));
     }
 
     return user;
@@ -46,7 +51,7 @@ const createUser = async (id) => {
     try {
         await getUser(id);
 
-        return Promise.reject(`User with id ${id} already exists`);
+        return Promise.reject(new HttpError(`User with id ${id} already exists`, 400));
     } catch (error) {
         return User.create({ googleId: id });
     }
@@ -58,7 +63,7 @@ const deleteUser = async (id) => {
 
         return User.deleteOne({ googleId: id });
     } catch (error) {
-        return Promise.reject(`User with id ${id} not found`);
+        return Promise.reject(new HttpError(`User with id ${id} not found`, 404));
     }
 }
 
@@ -67,12 +72,12 @@ const getUserProfile = async (id) => {
         const user = await getUser(id);
 
         if (!user.profile) {                
-            return Promise.reject(`Profile for user with id ${id} not found`);
+            return Promise.reject(new HttpError(`Profile for user with id ${id} not found`, 404));
         }
 
         return user.profile;
     } catch (error) {
-        return Promise.reject(`User with id '${id}' not found`);
+        return Promise.reject(new HttpError(`User with id '${id}' not found`, 404));
     }
 }
 
@@ -81,14 +86,14 @@ const createUserProfile = async (id, details) => {
         const user = await getUser(id);
 
         if (user.profile) {
-            return Promise.reject(`Profile for user with id '${id}' already exists`);
+            return Promise.reject(new HttpError(`Profile for user with id '${id}' already exists`, 400));
         }
 
         const command = _.pick(details, 'firstName', 'lastName', 'dob', 'location', 'bio', 'avatarUrl');
 
         return User.updateOne({ googleId: id }, {profile: command}).exec();
     } catch (error) {
-        return Promise.reject(`User with id '${id}' not found`);
+        return Promise.reject(new HttpError(`User with id '${id}' not found`, 404));
     }
 };
 
@@ -97,14 +102,14 @@ const updateUserProfile = async (id, details) => {
         const user = await getUser(id);
 
         if (!user.profile) {
-            return Promise.reject(`Profile for user with id '${id}' not found`);
+            return Promise.reject(new HttpError(`Profile for user with id '${id}' not found`, 404));
         }
 
         const command = _.pick(details, 'firstName', 'lastName', 'dob', 'location', 'bio', 'avatarUrl');
 
         return User.updateOne({ googleId: id }, {profile: command}).exec();
     } catch (error) {
-        return Promise.reject(`User with id '${id}' not found`);
+        return Promise.reject(new HttpError(`User with id '${id}' not found`, 404));
     }
 };
 
@@ -112,6 +117,7 @@ const UserService = {
     DEFAULT_PAGE,
     DEFAULT_PAGE_SIZE,
     listUsers,
+    deleteUsers,
     getUser,
     createUser,
     deleteUser,
