@@ -3,7 +3,7 @@
         <b-img class="programmr-logo" :src="require('../assets/squarelogo.svg')"></b-img>
         <h1>About Programmr</h1>
         <p>We are an awesome team making an awesome dating app!</p>
-        <b-button class="home-button" v-on:click="mainmenu()">home();</b-button>
+        <b-button class="home-button" v-on:click="home()">home();</b-button>
     </div>
 </template>
 
@@ -11,7 +11,7 @@
 export default {
   name: 'About',
   methods: {
-    mainmenu() {
+    home() {
       this.$router.push('/').catch(error => {
         console.log(error)
       })
