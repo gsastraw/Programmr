@@ -22,9 +22,10 @@ body {
 }
 
 .programmr-logo {
-    width: 15%;
+    width: 10%;
     align-items: center;
     height: auto;
+    margin-top: 50px;
 }
 
 .welcome-to-programmr {
