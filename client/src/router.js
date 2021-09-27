@@ -26,7 +26,7 @@ const router = new Router({
       component: About
     },
     {
-      path: '/:userId/profile',
+      path: '/profile',
       name: 'profile',
       component: Profile
     }
