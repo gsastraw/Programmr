@@ -31,7 +31,8 @@ export default {
   padding-bottom: 30%px;
   margin-left: 10%;
   margin-right: 10%;
-  margin-bottom: 10px;
+  margin-bottom: 1px;
+  margin-top: 1%;
 }
 p {
     color: white;

@@ -1,7 +1,7 @@
 <template>
 <div>
     <b-img class="programmr-logo" :src="require('../assets/squarelogo.svg')"></b-img>
-    <h1>Profile for user id: {{ $route.params.id }}</h1>
+    <!--<h1>Profile for user id: {{ $route.params.id }}</h1>-->
     <profile-item/>
 </div>
 </template>
