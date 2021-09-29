@@ -28,26 +28,6 @@ body {
     margin-top: 50px;
 }
 
-.welcome-to-programmr {
-    position: absolute;
-    display: flex;
-    top: 45%;
-    width: 15%;
-    height: auto;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    font-family: Avenir;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 72px;
-    font-weight: bold;
-    line-height: 64px;
-    text-align: match-parent;
-
-    color: #A394FB;
-}
-
 .button_slide {
     flex: 1;
     max-height: 20%;

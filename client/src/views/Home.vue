@@ -3,7 +3,7 @@
   <div>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <b-img class="programmr-logo" :src="require('../assets/squarelogo.svg')"></b-img>
-      <div class="welcome-to-programmr container">{ Welcome to Programmr! }</div>
+      <div>{ Welcome to Programmr! }</div>
       <b-button class="button_slide slide_right" v-on:click="mainmenu()">continue();</b-button>
   </div>
 
@@ -16,7 +16,10 @@ export default {
   name: 'home',
   data() {
     return {
-      message: 'none'
+      message: 'none',
+      style: {
+        background: '../assets/loginbackground.svg'
+      }
     }
   },
   methods: {

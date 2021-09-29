@@ -27,7 +27,7 @@ const userProfileSchema = new mongoose.Schema({
     liked: [],
     disliked: [],
     bio: String,
-    avatarUrl: String
+    avatarUrl: [String]
 });
 
 userProfileSchema.virtual('fullName').get(() => {

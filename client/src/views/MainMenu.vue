@@ -1,29 +1,29 @@
 <template>
-<b-navbar toggleable="lg" fixed="top" type="dark" variant="dark">
-  <b-navbar-brand href="#">
-      <b-img class='logo' :src="require('../assets/squarelogo.svg')"></b-img>
-      Welcome
-  </b-navbar-brand>
-  <b-navbar-toggle target="nav-collapse">
-  </b-navbar-toggle>
-
-  <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav align="center">
-        <b-nav-item to='/mainmenu'>findMatch();</b-nav-item>
-        <b-nav-item href="/profile">myProfile();</b-nav-item>
-        <b-nav-item href="/matches">chat();</b-nav-item>
-        <b-nav-item href="/">signOut();</b-nav-item>
-      </b-navbar-nav>
-  </b-collapse>
-  </b-navbar>
+<div>
+  <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
+  <Sidebar/>
+  <div class="cardview-position">
+    <CardView/>
+  </div>
+  <div>
+    <b-button v-on:click="swipeLeft()" class="dislike-button">
+      <img src="../assets/dislikebutton.svg" alt="Click to dislike a user!" class="dislike-button">
+    </b-button>
+    <b-button v-on:click="swipeRight()" class="like-button">
+      <img src="../assets/likebutton.svg" alt="Click to like a user!" class="like-button">
+    </b-button>
+  </div>
+</div>
 
 </template>
 
 <script>
+import Sidebar from '../components/Sidebar.vue'
+import CardView from '../components/CardView.vue'
 
 export default {
   components: {
-
+    Sidebar, CardView
   }
 }
 
@@ -31,8 +31,53 @@ export default {
 
 <style scope>
 .logo {
-    width: 15%;
-    align-items: center;
-    height: auto;
+  position: fixed;
+  left: 1%;
+  width: 100px;
+  top: 1%;
+}
+.cardview-position {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.like-button {
+  position: fixed;
+  width: 80px;
+  height: 90px;
+  top: 87%;
+  left: 40%;
+}
+.dislike-button {
+  position: fixed;
+  width: 80px;
+  height: 90px;
+  top: 87%;
+  left: 53%;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    background: url("../assets/mobilebackground.svg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+  .like-button {
+    position: fixed;
+    width: 80px;
+    height: 90px;
+    top: 88%;
+    left: 26%;
+  }
+  .dislike-button {
+    position: fixed;
+    width: 80px;
+    height: 90px;
+    top: 88%;
+    left: 58%;
+  }
 }
 </style>
