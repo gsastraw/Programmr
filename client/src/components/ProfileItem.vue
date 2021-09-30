@@ -1,23 +1,17 @@
 <template>
 <div>
-    <div class="profile-container"> <!--TODO: Implement get and patch route: -->
-        <!--<p>Name: {{ user.fullName }}</p>
-        <p>DOB: {{ user.dob }}</p>
-        <p>Bio: {{ user.bio }}</p>
-        <p>Location: {{ user.Location }}</p>-->
+    <div class="user-container">
         <div class="profile-header">
           <div class="profile-picture">
             <b-img class="picture" :src="require('../assets/profile.png')"></b-img>
           </div>
           <div class="profile-name-location">
-            <h3 class="name">Name: Firstname Lastname</h3>
-            <p class="Location">Location: Gothenburg</p>
+            <h3 class="name">id: {{ profile._id }}</h3>
+            <p class="Location">GoogleID : {{ profile.googleId }}</p>
           </div>
         </div>
         <div class="profile-info">
-        <p class="DOB">DOB: 1/1-xxxx</p>
-        <p>Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel mollis leo. Vestibulum posuere eget urna at aliquam. Proin at semper dui, id tincidunt mi.  </p>
-        <p>Location: Gothenburg</p>
+        <p class="DOB">Created at: {{ profile.createdAt }}</p>
           <div class="button">
             <b-button pill class="edit-button" v-on:click="edit()">editProfile();</b-button>
           </div>
@@ -34,7 +28,7 @@ export default {
 </script>
 
 <style scoped>
-@media (min-width: 726px) {
+@media (min-width: 768px) {
 * {
   padding:0;
   margin: 0;

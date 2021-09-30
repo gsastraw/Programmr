@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import MainMenu from './views/MainMenu.vue'
 import About from './views/About.vue'
 import Profile from './views/Profile.vue'
+import Matches from './views/Matches.vue'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ const router = new Router({
       path: '/profile',
       name: 'profile',
       component: Profile
+    },
+    {
+      path: '/matches',
+      name: 'matches',
+      component: Matches
     }
   ]
 })
