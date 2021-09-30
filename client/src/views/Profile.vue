@@ -19,7 +19,7 @@ export default {
     Sidebar
   },
   mounted() {
-    Api.get('/users/3')
+    Api.get('/users')
       .then(response => {
         this.userId = response.data
       })
