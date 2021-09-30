@@ -49,8 +49,15 @@ const updateUserProfile = Joi.object({
     })
 });
 
+const createUserMatch = Joi.object({
+    id: Joi.string()
+        .alphanum()
+        .required()
+});
+
 module.exports = {
     createUser,
     createUserProfile,
-    updateUserProfile
+    updateUserProfile,
+    createUserMatch
 }

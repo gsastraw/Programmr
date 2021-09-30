@@ -1,6 +1,7 @@
 const _ = require('lodash');
 
 const User = require('../model').User;
+const Match = require('../model').Match;
 const HttpError = require('../httpError');
 
 const DEFAULT_PAGE = 1;
@@ -30,6 +31,8 @@ const listUsers = async (page = DEFAULT_PAGE, pageSize = DEFAULT_PAGE_SIZE) => {
 };
 
 const deleteUsers = async () => {
+    // Mongoose pre hooks are not working for some reason, will have to delete referenced matches like this for now
+    await Match.deleteMany({}).exec();
     return User.deleteMany({}).exec();
 }
 
@@ -38,7 +41,7 @@ const getUser = async (id) => {
         return Promise.reject(new HttpError("Id not defined", 400));
     }
 
-    const user = await User.findOne({ googleId: id }, { '_id': 0, '__v': 0 }).exec(); 
+    const user = await User.findOne({ googleId: id }).exec(); 
 
     if (!user) {
         return Promise.reject(new HttpError(`User with id '${id}' not found`, 404));
@@ -59,8 +62,13 @@ const createUser = async (id) => {
 
 const deleteUser = async (id) => {
     try {
-        await getUser(id);
+        const user = await getUser(id);
 
+        /**
+         * TODO: Convert to transaction, currently not supported because our local 
+         * mongo instances run as standalone servers instead of replica sets
+         */
+        await Match.deleteMany({ profiles: user._id }).exec();
         return User.deleteOne({ googleId: id });
     } catch (error) {
         return Promise.reject(new HttpError(`User with id ${id} not found`, 404));
