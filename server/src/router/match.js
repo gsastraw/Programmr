@@ -1,60 +1,145 @@
 const express = require('express');
 const router = express.Router();
-const Match = require('../model/match');
-const MatchService = require('../service/match');
 
-router.post('/', (req, res) => { // TODO: not sure if this works
+const MatchService = require('../service').MatchService;
+const MatchCommands = require('../command').MatchCommands;
+
+const HttpError = require('../httpError');
+
+router.post('/', (req, res) => {
+    const {error, _} = MatchCommands.createMatch.validate(req.body);    
     
+    if (error) {
+        return res.status(400).send({
+            message: formatValidationError(error)
+        })
+    }
+
+    const users = req.body.users;
+
+    MatchService.createMatch(users[0], users[1])
+        .then(_ => {
+            return res.sendStatus(201);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
+                message: error
+            });
+        })
 });
 
-router.get('/', async (req, res) => { // Get a list of all matches with pagination
-    try {
-        const pageSize = parseInt(req.query.limit || 20);
-        const page = parseInt(req.query.skip || 1);
-        const matches = await Match.find()
-                        .limit(pageSize)
-                        .skip(page - 1)
-                        .exec();
-        return res.json(matches);
-    } catch(err){ 
-        return res.status(500).send(err);
-    }
+router.get('/', (req, res) => {
+    const page = req.query.page ? parseInt(req.query.page) : MatchService.DEFAULT_PAGE;
+    const pageSize = req.query.pageSize ? parseInt(req.query.pageSize) : MatchService.DEFAULT_PAGE_SIZE;
+
+    MatchService.listMatches(page, pageSize)
+        .then(matches => {
+            return res.json(matches);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
+                message: error
+            });
+        })
 });
+
+router.delete('/', (req, res) => {
+    MatchService.deleteMatches()
+        .then(_ => {
+            return res.sendStatus(200);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
+                message: error
+            });
+        })
+})
 
 router.get('/:matchId', (req, res) => {
-    let matchId = req.params.matchId;
-    Match.findById(matchId, (err, match) => {
-        if (err) {
-            return res.status(404).send({ 'message': 'Match not found!', 'error': err });
-        }
-        if (match === null) {
-            return res.status(404).send({ 'message': 'Match not found!', 'error': err });
-        }
-        res.json(match);
-    });
+    MatchService.getMatch(req.params.matchId)
+        .then(match => {
+            return res.json(match);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
+                message: error
+            });
+        })
 });
 
 router.delete('/:matchId', (req, res) => {
-    let matchId = req.params.matchId;
-    Match.findOneAndDelete({_id: matchId}, (err, match) => {
-        if (err) {
-            return res.status(404).send({ 'message': 'The match you want to delete could not be found', 'error': err });
-        }
-        if (match === null) {
-            return res.status(404).send({ 'message': 'The match you want to delete could not be found! Something went wrong.', 'error': err });
-        }
-        res.json(match);
-    });
-});
+    MatchService.deleteMatch(req.params.matchId)
+        .then(_ => {
+            return res.sendStatus(200);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
 
-router.post('/:matchId/conversation', (req, res) => {
-
-
+            return res.status(500).send({
+                message: error
+            });
+        })
 });
 
 router.get('/:matchId/conversation', (req, res) => {
+    MatchService.getMatchMessages(req.params.matchId)
+        .then(messages => {
+            return res.json(messages);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
 
+            return res.status(500).send({
+                message: error
+            });
+        })
 });
+
+const formatValidationError = (error) => {
+    if (!error || !error.details) {
+        return "An error has occurred";
+    }
+
+    const details = error.details;
+
+    if (details.length === 0) {
+        return "An error has occurred";
+    }
+
+    return details.map(detail => detail.message).join();
+}
 
 module.exports = {
     base: "/matches",

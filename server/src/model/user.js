@@ -24,8 +24,6 @@ const userProfileSchema = new mongoose.Schema({
             required: true
         }
     },
-    liked: [],
-    disliked: [],
     bio: String,
     avatarUrl: [String]
 });
@@ -34,12 +32,18 @@ userProfileSchema.virtual('fullName').get(() => {
     return this.firstName + ' ' + this.lastName;
 });
 
+const matchInfoSchema = new mongoose.Schema({
+    accepted: [String],
+    rejected: [String]
+});
+
 const userSchema = new mongoose.Schema({
     googleId: {
         type: String,
         required: true,
     },
     profile: userProfileSchema,
+    matchInfo: matchInfoSchema
 },
 {
     timestamps: true

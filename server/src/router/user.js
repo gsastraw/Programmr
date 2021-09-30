@@ -4,6 +4,8 @@ const router = express.Router();
 const UserService = require('../service').UserService;
 const UserCommands = require('../command').UserCommands;
 
+const MatchService = require('../service').MatchService;
+
 const HttpError = require('../httpError');
 
 router.post('', (req, res) => {
@@ -12,12 +14,12 @@ router.post('', (req, res) => {
     if (error) {
         return res.status(400).send({
             message: formatValidationError(error)
-        })
+        });
     }
 
     UserService.createUser(req.body.id)
         .then(_ => {
-            return res.sendStatus(200);
+            return res.sendStatus(201);
         })
         .catch(error => {
             if (error instanceof HttpError) {
@@ -113,12 +115,12 @@ router.post('/:userId/profile', (req, res) => {
     if (error) {
         return res.status(400).send({
             message: formatValidationError(error)
-        })
+        });
     }
 
     UserService.createUserProfile(req.params.userId, req.body)
         .then(_ => {
-            return res.sendStatus(200);
+            return res.sendStatus(201);
         })
         .catch(error => {
             if (error instanceof HttpError) {
@@ -157,7 +159,7 @@ router.patch('/:userId/profile', (req, res) => {
     if (error) {
         return res.status(400).send({
             message: formatValidationError(error)
-        })
+        });
     }
 
     UserService.updateUserProfile(req.params.userId, req.body)
@@ -178,11 +180,47 @@ router.patch('/:userId/profile', (req, res) => {
 });
 
 router.post('/:userId/matches', (req, res) => {
+    const {error, _} = UserCommands.createUserMatch.validate(req.body);    
 
+    if (error) {
+        return res.status(400).send({
+            message: formatValidationError(error)
+        });
+    }
+
+    MatchService.createMatch(req.params.userId, req.body.id)
+        .then(_ => {
+            return res.sendStatus(201);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
+                message: error
+            });
+        })
 });
 
 router.get('/:userId/matches', (req, res) => {
+    MatchService.getMatchesForUser(req.params.userId)
+        .then(matches => {
+            return res.json(matches);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
 
+            return res.status(500).send({
+                message: error
+            });
+        })
 });
 
 const formatValidationError = (error) => {

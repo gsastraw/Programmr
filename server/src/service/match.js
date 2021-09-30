@@ -1,54 +1,139 @@
 const Match = require('../model/match');
-const User = require('../model').User;
 const UserService = require('../service/user');
 
-const createMatch = async (userId, matchedId) => {
-    /* When the suggested IDs are fetched from the match algorithm, this method first checks to see if the match already exists in the system.
-       If the match already exists, a rejected Promise is returned. Otherwise, a Match is created that ties the user ID and the matched ID together.
-    */
-    const currentUser = await UserService.getUser(userId);
-    const matchedUser = await UserService.getUser(matchedId);
+const HttpError = require('../httpError');
 
-    if (!currentUser || !matchedUser) {
-        return Promise.reject(`Could not create a match between these two IDs!`)
+const DEFAULT_PAGE = 1;
+const DEFAULT_PAGE_SIZE = 20;
+
+const listMatches = async (page = DEFAULT_PAGE, pageSize = DEFAULT_PAGE_SIZE) => {
+    if (isNaN(page)) {
+        return Promise.reject(new HttpError(`Page must be a number (value = ${page})`, 400));
     }
 
-    for (let i = 0; i < currentUser.liked.length; i++) {
-        for (let j = 0; j < matchedUser.liked.length; j++) {
-            if (currentUser.liked[i] == matchedId) {
-                if (matchedUser.liked[j] == userId) {
-                    Match.create({ profiles: userId, matchedId });
-                }
-            } else {
-                return Promise.reject(`Two users need to match with each other in order to create a match!`)
-            }
-        }
+    if (isNaN(pageSize)) {
+        return Promise.reject(new HttpError(`Page size must be a number (value = ${pageSize})`, 400));
     }
+
+    if (page < 1) {
+        return Promise.reject(new HttpError(`Page can't be lower than 1 (value = ${page})`, 400));
+    }
+
+    if (pageSize < 0) {
+        return Promise.reject(new HttpError(`Page size can't be lower than 0 (value = ${pageSize})`, 400));
+    }
+
+    return Match.find({}, '-messages')
+        .limit(pageSize)
+        .skip(page - 1)
+        .exec();
+};
+
+const deleteMatches = async () => {
+    return Match.deleteMany({}).exec();
 }
 
-const fetchMatchById = async (id) => {
+const getMatch = async (id) => {
     if (!id) {
-        throw 'ID could not be identified';
+        return Promise.reject(new HttpError("Id not defined", 400));
     }
 
-    const match = await Match.findById(id);
+    const match = await Match.findById(id, '-messages').exec()
 
     if (!match) {
-        return Promise.reject('Match could not be found!');
-    } else {
-        return match;
+        return Promise.reject(new HttpError(`Match with id '${id}' not found`, 404));
+    }
+
+    return match;
+}
+
+const createMatch = async (userId1, userId2) => {
+    if (!userId1 || !userId2) {
+        return Promise.reject(new HttpError("UserId not defined", 400))
+    }
+
+    try {
+        const user1 = await UserService.getUser(userId1);
+        const user2 = await UserService.getUser(userId2);
+
+        const matchExists = await Match.exists({ profiles: { $all: [user1._id, user2._id] } });
+
+        if (matchExists) {
+            return Promise.reject(new HttpError(`Match for users with id '${userId1}' and '${userId2}' already exists`, 400));
+        }
+
+        return Match.create({ profiles: [user1._id, user2._id] });
+    } catch (error) {
+        return Promise.reject(error);
     }
 }
 
-const checkIfMatchAlreadyExists = (userId, matchedId) => {
-    // A helper function that returns true if the match.profiles contains the swiper's ID and the swipee's ID, else returns false
-    const match = Match.find( {  } ).exec();
-    return match.profiles.includes(userId, matchedId);
+const deleteMatch = async (id) => {
+    try {
+        await getMatch(id);
+
+        return Match.deleteOne({ _id: id });
+    } catch (error) {
+        return Promise.reject(new HttpError(`Match with id '${id}' not found`, 404));
+    }
+}
+
+const getMatchesForUser = async (userId, page = DEFAULT_PAGE, pageSize = DEFAULT_PAGE_SIZE) => {
+    if (!userId) {
+        return Promise.reject(new HttpError("UserId not defined", 400))
+    }
+
+    if (isNaN(page)) {
+        return Promise.reject(new HttpError(`Page must be a number (value = ${page})`, 400));
+    }
+
+    if (isNaN(pageSize)) {
+        return Promise.reject(new HttpError(`Page size must be a number (value = ${pageSize})`, 400));
+    }
+
+    if (page < 1) {
+        return Promise.reject(new HttpError(`Page can't be lower than 1 (value = ${page})`, 400));
+    }
+
+    if (pageSize < 0) {
+        return Promise.reject(new HttpError(`Page size can't be lower than 0 (value = ${pageSize})`, 400));
+    }
+
+    try {
+        const user = await UserService.getUser(userId);
+
+        return Match.find({ profiles: user._id })
+            .limit(pageSize)
+            .skip(page - 1)
+            .exec();
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+const getMatchMessages = async (id) => {
+    if (!id) {
+        return Promise.reject(new HttpError("Id not defined", 400));
+    }
+
+    const match = await Match.findById(id, 'messages').exec()
+
+    if (!match) {
+        return Promise.reject(new HttpError(`Match with id '${id}' not found`, 404));
+    }
+
+    // TODO: Should probably be paginated
+    return match.messages;
 }
 
 const MatchService = {
+    listMatches,
+    deleteMatches,
+    getMatch,
     createMatch,
-    checkIfMatchAlreadyExists
-};
+    deleteMatch,
+    getMatchesForUser,
+    getMatchMessages
+}
 
 module.exports = MatchService;
