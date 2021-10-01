@@ -6,24 +6,45 @@
             <b-img class="picture" :src="require('../assets/profile.png')"></b-img>
           </div>
           <div class="profile-name-location">
-            <h3 class="name">id: {{ profile._id }}</h3>
-            <p class="Location">GoogleID : {{ profile.googleId }}</p>
+            <h3 class="name">Name: {{ users.firstName }} {{ users.lastName }}</h3>
+            <p class="Location">Location : {{ users.location }}</p>
           </div>
         </div>
         <div class="profile-info">
-        <p class="DOB">Created at: {{ profile.createdAt }}</p>
-          <div class="button">
-            <b-button pill class="edit-button" v-on:click="edit()">editProfile();</b-button>
-          </div>
+        <p class="DOB">DOB: {{ users.dob }}</p>
+         <p class="DOB">Bio: {{ users.bio }}</p>
+        </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
+import { Api } from '@/Api'
+
 export default {
   name: 'profile-item',
-  props: ['profile']
+  mounted() {
+    console.log('PAGE is loaded!')
+    Api.get('/users/3/profile')
+      .then(response => {
+        console.log(response)
+        this.users = response.data
+      })
+      .catch(error => {
+        this.users = []
+        console.log(error)
+        //   TODO: display some error message instead of logging to console
+      })
+      .then(() => {
+        console.log('This runs every time after success or error.')
+      })
+  },
+  data() {
+    return {
+      users: [],
+      text: ''
+    }
+  }
 }
 </script>
 
@@ -81,7 +102,7 @@ export default {
   margin-top: 10px;
   left: 5%;
   padding-bottom: 10px;
-  height: 300px;
+  height: 250px;
 }
 .profile-info p {
   font-size: 20px;
@@ -89,9 +110,7 @@ export default {
   color: white;
 }
 .edit-button {
-  margin-top:10px;
   background-color:#7e69ff;
-  width: 30%;
 }
 }
 * {
@@ -106,6 +125,7 @@ export default {
   font-size: 20px;
   flex-direction: column;
   justify-content: center;
+  height: auto;
 }
 .profile-header {
   background: rgba(114,204,255,0.23);
@@ -132,8 +152,6 @@ export default {
   margin-top: 10px;
 }
 .edit-button {
-  margin-top:50px;
   background-color:#7e69ff;
-  width: 30%;
 }
 </style>
