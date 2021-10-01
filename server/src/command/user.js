@@ -24,7 +24,8 @@ const createUserProfile = Joi.object({
     bio: Joi.string(),
     avatarUrl: Joi.string().uri({
         scheme: [
-            'http'
+            'http',
+            'https'
         ]
     })
 });
