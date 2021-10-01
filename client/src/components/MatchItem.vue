@@ -1,7 +1,8 @@
 <template>
     <div>
-        <div>Match {{ match._id }}</div>
-        <div> was created at {{ match.createdAt }}</div>
+        <div>Match id: {{ match._id }}</div>
+        <div>was created at: {{ match.createdAt }}</div>
+        <div>was updated at: {{ match.updatedAt }}</div>
     </div>
 </template>
 
