@@ -1,11 +1,11 @@
 <template>
     <div>
+    <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
     <Sidebar/>
-    <b-img class="programmr-logo" :src="require('../assets/squarelogo.svg')"></b-img>
     <b-container fluid="md" class="myContainer">
       <b-card-group deck>
-        <b-card no-body header="List of matches:">
-      <b-list-group>
+        <b-card class="header" no-body header="List of matches:">
+      <b-list-group class="list-group-mine">
         <b-list-group-item button v-for="match in matches" v-bind:key="match.googleId">
           <match-item v-bind:match="match" v-on:del-match="deleteMatch"/>
         </b-list-group-item>
@@ -64,3 +64,23 @@ export default {
 }
 
 </script>
+
+<style scoped>
+.logo {
+  position: fixed;
+  left: 1%;
+  width: 100px;
+  top: 1%;
+}
+.list-group-mine .list-group-item{
+  background-color: #262942;
+}
+.list-group-mine .list-group-item:hover{
+  background-color: #425A7F;
+}
+.header {
+    background-color: #262942;
+    color: white;
+    font-size: 18px;
+}
+</style>

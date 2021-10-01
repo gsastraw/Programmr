@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="match-info">
         <div>Match id: {{ match._id }}</div>
         <div>was created at: {{ match.createdAt }}</div>
         <div>was updated at: {{ match.updatedAt }}</div>
@@ -13,3 +13,9 @@ export default {
   props: ['match']
 }
 </script>
+
+<style scoped>
+.match-info {
+  color: white;
+}
+</style>
