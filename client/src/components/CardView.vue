@@ -4,19 +4,15 @@
     <b-container>
       <b-row></b-row>
       <b-col class="name-text">
-        {{ users[counter].firstName }}
-        {{ users[counter].lastName }}
+        {{ users[counter].profile.firstName }}
+        {{ users[counter].profile.lastName }}
       </b-col>
     </b-container>
-      <b-img v-if="users[counter].avatarUrl != null" v-bind:src="users[counter].avatarUrl" class="profile-container">
+      <b-img v-if="users[counter].profile.avatarUrl != null" v-bind:src="users[counter].profile.avatarUrl" class="profile-container">
         </b-img>
-        <b-img class="profile-container" v-else v-bind:src="'https://indol.se/wp-content/uploads/2017/04/profile-placeholder.png'"></b-img>
-        <b-container>
-          <b-row>
-            <b-col class="bio-text" cols="12">{{ users[counter].bio }}</b-col>
-          </b-row>
-        </b-container>
-  </div>
+        <b-img class="profile-container" align="left" v-else v-bind:src="'https://indol.se/wp-content/uploads/2017/04/profile-placeholder.png'"></b-img>
+        <div class="bio-text">{{ users[counter].profile.bio }}</div>
+        </div>
   <b-button class="button" variant="danger" v-on:click="lastUser">swipeLeft();</b-button>
   <b-button class="button" variant="success" v-on:click="nextUser">swipeRight();</b-button>
 </div>
@@ -69,8 +65,8 @@ export default {
   color: white;
 }
 .bio-text {
+  float: right;
   font-size: 1.4em;
-  right: -150px;
   color: white;
 }
 .button {
@@ -85,6 +81,7 @@ export default {
 }
 
 .profile-container {
+  margin-right: 10px;
   position: absolute;
   width: 350px;
   height: 350px;
