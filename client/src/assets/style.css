@@ -22,6 +22,8 @@ body {
 }
 
 .programmr-logo {
+    position: relative;
+    left: -85vh;
     width: 10%;
     align-items: center;
     height: auto;

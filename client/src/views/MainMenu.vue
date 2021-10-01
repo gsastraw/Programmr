@@ -3,16 +3,9 @@
   <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
   <Sidebar/>
   <div class="cardview-position">
-    <CardView/>
-  </div>
-  <div>
-    <b-button v-on:click="swipeLeft()" class="dislike-button">
-      <img src="../assets/dislikebutton.svg" alt="Click to dislike a user!" class="dislike-button">
-    </b-button>
-    <b-button v-on:click="swipeRight()" class="like-button">
-      <img src="../assets/likebutton.svg" alt="Click to like a user!" class="like-button">
-    </b-button>
-  </div>
+    <CardView>
+    </CardView>
+    </div>
 </div>
 
 </template>
@@ -23,7 +16,12 @@ import CardView from '../components/CardView.vue'
 
 export default {
   components: {
-    Sidebar, CardView
+    Sidebar,
+    CardView
+  },
+  mounted() {
+  },
+  methods: {
   }
 }
 

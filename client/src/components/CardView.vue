@@ -1,35 +1,58 @@
 <template>
+<div>
   <div class="card-container">
-      <div class="profile-container"></div>
+    <b-container>
+      <b-row></b-row>
+      <b-col class="name-text">
+        {{ users[counter].firstName }}
+        {{ users[counter].lastName }}
+      </b-col>
+    </b-container>
+      <b-img v-bind:src="users[counter].avatarUrl" class="profile-container">
+        </b-img>
+        <b-container>
+          <b-row>
+            <b-col class="bio-text">{{ users[counter].bio }}</b-col>
+          </b-row>
+        </b-container>
   </div>
+  <b-button class="button" variant="danger" v-on:click="lastUser">swipeLeft();</b-button>
+  <b-button class="button" variant="success" v-on:click="nextUser">swipeRight();</b-button>
+</div>
 </template>
 
 <script>
-import Api from '../Api'
-
+import UserService from '../services/UserService'
 export default {
   name: 'cardview',
   components: {
   },
-  props: {
-    firstName: String,
-    dob: String,
-    location: {
-      long: Number,
-      lat: Number
-    },
-    bio: String,
-    avatarUrl: String
+  data() {
+    return {
+      counter: 0,
+      users: []
+    }
+  },
+  created() {
   },
   mounted() {
+    UserService.getAllUsers().then(response => {
+      this.users = response.data
+    })
   },
   methods: {
-    getUsersBasedOffLocation(id) {
-      Api.get('users').then(
-        response => {
-
-        }
-      )
+    nextUser() {
+      // currently it just iterates through every user
+      this.counter++
+      if (this.users[this.counter] == null) {
+        this.counter = 0
+      }
+    },
+    lastUser() {
+      this.counter--
+      if (this.users[this.counter] == null) {
+        this.counter = 0
+      }
     }
   }
 }
@@ -37,6 +60,22 @@ export default {
 </script>
 
 <style>
+.name-text {
+  right: -183px;
+  font-weight: bold;
+  font-size: 2em;
+  line-height: 3em;
+  color: white;
+}
+.bio-text {
+  font-size: 1.4em;
+  right: -150px;
+  color: white;
+}
+.button {
+  width: 200px;
+  height: vh;
+}
 .card-container {
   position: relative;
   width: 1416px;
@@ -77,12 +116,21 @@ export default {
   }
 
   .profile-container {
-    position: absolute;
-    width: 329px;
-    height: 240px;
-    left: 10px;
-    top: 15px;
+    top: 30px;
+    left: 55px;
+    width: 240px;
+    height: 280px;
     background: rgba(255,255,255,0.1);
+  }
+
+  .bio-text {
+    top: 52vh;
+    left: 0.5%;
+  }
+
+  .name-text {
+    top: 45vh;
+    right: -1.3vw;
   }
 }
 </style>
