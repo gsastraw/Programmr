@@ -8,11 +8,12 @@
         {{ users[counter].lastName }}
       </b-col>
     </b-container>
-      <b-img v-bind:src="users[counter].avatarUrl" class="profile-container">
+      <b-img v-if="users[counter].avatarUrl != null" v-bind:src="users[counter].avatarUrl" class="profile-container">
         </b-img>
+        <b-img class="profile-container" v-else v-bind:src="'https://indol.se/wp-content/uploads/2017/04/profile-placeholder.png'"></b-img>
         <b-container>
           <b-row>
-            <b-col class="bio-text">{{ users[counter].bio }}</b-col>
+            <b-col class="bio-text" cols="12">{{ users[counter].bio }}</b-col>
           </b-row>
         </b-container>
   </div>
@@ -126,6 +127,7 @@ export default {
   .bio-text {
     top: 52vh;
     left: 0.5%;
+    font-weight: bolder;
   }
 
   .name-text {
