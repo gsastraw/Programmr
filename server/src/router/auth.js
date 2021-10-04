@@ -5,9 +5,9 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../model').User;
 
-const GOOGLE_CLIENT_KEY = process.env.GOOGLE_CLIENT_KEY || '1053310788215-dotkr3r02rmma7cdhvmutjf62ttpaj0n.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || 'xdO3ZMl-QHHmqSmOr1gIWXZs';
-const GOOGLE_CALLBACK_URL = process.env.GOOGLE_CALLBACK_URL || 'http://localhost:3000/auth/google/callback';
+const GOOGLE_CLIENT_KEY = process.env.GOOGLE_CLIENT_KEY || 'DEFAULT_GOOGLE_CLIENT_KEY';
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || 'DEFAULT_GOOGLE_CLIENT_SECRET';
+const GOOGLE_CALLBACK_URL = process.env.GOOGLE_CALLBACK_URL || 'DEFAULT_GOOGLE_CALLBACK_URL';
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
