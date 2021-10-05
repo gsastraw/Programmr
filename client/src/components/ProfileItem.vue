@@ -3,11 +3,11 @@
     <div class="user-container">
         <div class="profile-header">
           <div class="profile-picture">
-            <b-img class="picture" :src="require('../assets/profile.png')"></b-img>
+            <b-img v-if="users.avatarUrl != null" v-bind:src="users.avatarUrl" class="picture"></b-img>
           </div>
           <div class="profile-name-location">
-            <h3 class="name">Name: {{ users.firstName }} {{ users.lastName }}</h3>
-            <p class="Location">Location : {{ users.location }}</p>
+            <h1 class="name">Name: {{ users.firstName }} {{ users.lastName }}</h1>
+            <h2 class="Location">Location : {{ users.location }}</h2>
           </div>
         </div>
         <div class="profile-info">
@@ -25,7 +25,7 @@ export default {
   name: 'profile-item',
   mounted() {
     console.log('PAGE is loaded!')
-    Api.get('/users/3/profile')
+    Api.get('/users/420/profile')
       .then(response => {
         console.log(response)
         this.users = response.data
@@ -55,13 +55,16 @@ export default {
   margin: 0;
   box-sizing: border-box;
 }
+.user-container {
+  padding-top: 80px;
+}
 .profile-picture {
   float: left;
   padding: 20px;
+  height: 20px;
 }
 .picture {
-    width: 60%;
-    height: auto;
+    height: 250px;
 }
 .profile-info {
   font-size: 20px;
@@ -72,7 +75,7 @@ export default {
 .profile-header {
   background: rgba(114,204,255,0.23);
   width: 90%;
-  height: 170px;
+  height: 280px;
   position: relative;
   box-shadow: 0px 5px 4px rgba(0,0,0,0.2);
   margin-top: 30px;
@@ -83,13 +86,14 @@ export default {
   float: left;
   flex-direction: column;
   justify-content: center;
-  padding-top: 60px;
+  padding-top: 90px;
+  padding-left: 240px;
 }
-.profile-name-location h3 {
+.profile-name-location h1 {
   font-weight: bold;
   color: white;
 }
-.profile-name-location p {
+.profile-name-location h2 {
   font-weight: bold;
   display: flex;
   color: #EABCA3;
@@ -102,7 +106,7 @@ export default {
   margin-top: 10px;
   left: 5%;
   padding-bottom: 10px;
-  height: 250px;
+  height: auto;
 }
 .profile-info p {
   font-size: 20px;
@@ -125,7 +129,7 @@ export default {
   font-size: 20px;
   flex-direction: column;
   justify-content: center;
-  height: auto;
+  padding-bottom: 30px;
 }
 .profile-header {
   background: rgba(114,204,255,0.23);
@@ -142,14 +146,11 @@ export default {
 .profile-info {
   background: rgba(114,204,255,0.23);
   box-shadow: 0px 5px 4px rgba(0,0,0,0.2);
-  margin-top: 5px;
-  padding-bottom: 10px;
 }
 .profile-info p {
   font-size: 20px;
-  padding-top: 10px;
   color: white;
-  margin-top: 10px;
+  margin-top: 30px;
 }
 .edit-button {
   background-color:#7e69ff;

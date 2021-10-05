@@ -1,15 +1,25 @@
 <template>
-    <div class="body">
-        <b-img class="programmr-logo" :src="require('../assets/squarelogo.svg')"></b-img>
+    <div>
+      <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
+      <Sidebar/>
+      <div class="body">
         <h1>About Programmr</h1>
         <p>We are an awesome team making an awesome dating app!</p>
-        <b-button class="home-button" v-on:click="home()">home();</b-button>
+        <p>Made by:</p>
+        <p>Mislav Milicevic</p>
+        <p>Gregory Sastrawidjaya</p>
+        <p>Klara Svensson</p>
+      </div>
     </div>
 </template>
 
 <script>
+import Sidebar from '../components/Sidebar.vue'
 export default {
   name: 'About',
+  components: {
+    Sidebar
+  },
   methods: {
     home() {
       this.$router.push('/').catch(error => {
@@ -22,6 +32,7 @@ export default {
 </script>
 
 <style scoped>
+<<<<<<< HEAD
 .home-button {
     background-color: #72CCFF;
     padding: 20px;
@@ -31,9 +42,19 @@ export default {
     text-align: center;
     padding: 20px;
 } */
+=======
+.body {
+    color: white;
+    text-align: center;
+    padding: 20px;
+    background: rgba(114,204,255,0.23);
+    margin-top: 100px;
+}
+>>>>>>> 0355cc1ada7e62dc66b9d8ecb799fbbc84904d3b
 h1 {
     padding-top: 40px;
     text-align: center;
+    font-weight: bold;
 }
 p {
     padding: 10px;

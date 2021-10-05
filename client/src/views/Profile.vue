@@ -1,7 +1,7 @@
 <template>
 <div>
+    <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
     <Sidebar/>
-    <b-img class="programmr-logo" :src="require('../assets/squarelogo.svg')"></b-img>
     <!--<h1>Profile for user id: {{ $route.params.id }}</h1>-->
     <profile-item v-bind:user="users"/>
 </div>
@@ -24,5 +24,11 @@ export default {
 h1 {
     color: white;
     font-weight: bold;
+}
+.logo {
+  position: fixed;
+  left: 1%;
+  width: 100px;
+  top: 1%;
 }
 </style>
