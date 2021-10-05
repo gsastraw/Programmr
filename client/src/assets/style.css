@@ -15,11 +15,11 @@ body {
     background-size: cover;
 }
 
-.container {
+/* .container {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
 .programmr-logo {
     position: relative;

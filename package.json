@@ -10,6 +10,6 @@
     "migrate-mongo": "^8.2.3",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
-    "vue-swing": "^0.0.10"
+    "vue2-interact": "^0.0.3"
   }
 }

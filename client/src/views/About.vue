@@ -26,11 +26,11 @@ export default {
     background-color: #72CCFF;
     padding: 20px;
 }
-.body {
+/* .body {
     color: white;
     text-align: center;
     padding: 20px;
-}
+} */
 h1 {
     padding-top: 40px;
     text-align: center;
