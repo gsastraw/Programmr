@@ -32,17 +32,6 @@ export default {
 </script>
 
 <style scoped>
-<<<<<<< HEAD
-.home-button {
-    background-color: #72CCFF;
-    padding: 20px;
-}
-/* .body {
-    color: white;
-    text-align: center;
-    padding: 20px;
-} */
-=======
 .body {
     color: white;
     text-align: center;
@@ -50,7 +39,6 @@ export default {
     background: rgba(114,204,255,0.23);
     margin-top: 100px;
 }
->>>>>>> 0355cc1ada7e62dc66b9d8ecb799fbbc84904d3b
 h1 {
     padding-top: 40px;
     text-align: center;
