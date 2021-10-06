@@ -4,6 +4,8 @@
   <Vue2InteractDraggable
   :interact-out-of-sight-x-coordinate="400"
   :interact-max-rotation="15"
+  :interact-lock-swipe-down="true"
+  :interact-lock-swipe-up="true"
   :interact-x-threshold="200"
   :interact-y-threshold="200"
   @draggedLeft="lastUser"
@@ -23,8 +25,6 @@
     </div>
   </Vue2InteractDraggable>
   </div>
-  <b-button class="button" variant="danger" v-on:click="lastUser">swipeLeft();</b-button>
-  <b-button class="button" variant="success" v-on:click="nextUser">swipeRight();</b-button>
 </div>
 </template>
 

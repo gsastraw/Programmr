@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div class="background">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <b-img class="programmr-logo" :src="require('../assets/squarelogo.svg')"></b-img>
       <div>{ Welcome to Programmr! }</div>
@@ -41,6 +41,21 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import url("../assets/style.css");
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: hidden;
+
+  background: white;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 </style>
