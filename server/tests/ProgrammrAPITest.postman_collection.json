@@ -1015,6 +1015,22 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body is correct\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData[0]).to.not.eql(undefined);\r",
+							"    \r",
+							"    const match = jsonData[0];\r",
+							"\r",
+							"    pm.expect(match.profiles).to.not.eql(undefined);\r",
+							"    pm.expect(match.profiles.length).to.eql(2);\r",
+							"    pm.expect(match.profiles).to.contain(\"614b9bbcb97fb423ac92eb8f\");\r",
+							"    pm.expect(match.profiles).to.contain(\"614b9ef50c3a463234066f60\");\r",
+							"\r",
+							"    pm.expect(match._id).to.not.eql(undefined);\r",
+							"    pm.collectionVariables.set('matchId', match._id);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -1089,6 +1105,150 @@
 						"users",
 						"999",
 						"matches"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMatchForUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body is correct\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(jsonData.profiles).to.not.eql(undefined);\r",
+							"    pm.expect(jsonData.profiles.length).to.eql(2);\r",
+							"    pm.expect(jsonData.profiles).to.contain(\"614b9bbcb97fb423ac92eb8f\");\r",
+							"    pm.expect(jsonData.profiles).to.contain(\"614b9ef50c3a463234066f60\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/users/1/matches/{{matchId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"1",
+						"matches",
+						"{{matchId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMatchForMissingUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/users/999/matches/{{matchId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"999",
+						"matches",
+						"{{matchId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMissingMatchForUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/users/1/matches/000000000000",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"1",
+						"matches",
+						"000000000000"
 					]
 				}
 			},
