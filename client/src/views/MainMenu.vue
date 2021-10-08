@@ -27,7 +27,7 @@ export default {
 
 </script>
 
-<style scopec>
+<style scoped>
 .background {
   position: absolute;
   top: 0;
