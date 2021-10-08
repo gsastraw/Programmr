@@ -2,20 +2,17 @@
   <div class="background">
     <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
     <Sidebar/>
-    <!--<h1>Profile for user id: {{ $route.params.id }}</h1>-->
-    <profile-item v-bind:user="users"/>
-    <b-button to="/profile/edit" class="button" squared>Edit</b-button>
+    <edit-profile-item v-bind:user="users"/>
 </div>
 </template>
 
 <script>
 import Sidebar from '../components/Sidebar.vue'
-import ProfileItem from '../components/ProfileItem.vue'
-
+import EditProfileItem from '../components/EditProfileItem.vue'
 export default {
-  name: 'profile',
+  name: 'EditProfile',
   components: {
-    'profile-item': ProfileItem,
+    'edit-profile-item': EditProfileItem,
     Sidebar
   }
 }
@@ -25,10 +22,6 @@ export default {
 h1 {
     color: white;
     font-weight: bold;
-}
-.button {
-    margin-top: 5px;
-    background: #7e69ff;
 }
 .logo {
   position: fixed;

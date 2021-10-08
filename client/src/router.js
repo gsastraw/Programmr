@@ -5,6 +5,7 @@ import MainMenu from './views/MainMenu.vue'
 import About from './views/About.vue'
 import Profile from './views/Profile.vue'
 import Matches from './views/Matches.vue'
+import EditProfile from './views/EditProfile.vue'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ const router = new Router({
       path: '/matches',
       name: 'matches',
       component: Matches
+    },
+    {
+      path: '/profile/edit',
+      name: 'edit',
+      component: EditProfile
     }
   ]
 })
