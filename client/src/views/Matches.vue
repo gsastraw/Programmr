@@ -1,5 +1,6 @@
 <template>
-    <div>
+<div>
+    <div class="background">
     <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
     <Sidebar/>
     <b-container fluid="md" class="myContainer">
@@ -13,7 +14,9 @@
       </b-card>
       </b-card-group>
     </b-container>
+      <b-button class="delete-matches" v-on:click="deleteMatches()">DeleteAll( );</b-button>
     </div>
+</div>
 </template>
 
 <script>
@@ -59,6 +62,15 @@ export default {
           this.matches.splice(index, 1)
         })
         // TODO: catch error
+    },
+    deleteMatches() {
+      Api.delete('/matches')
+        .then(response => {
+          this.matches = response.data.matches
+        })
+        .catch(error => {
+          this.message = error
+        })
     }
   }
 }
@@ -66,6 +78,20 @@ export default {
 </script>
 
 <style scoped>
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: scroll;
+
+  background: url("../assets/loginbackground.svg") no-repeat center center fixed;;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 .logo {
   position: fixed;
   left: 1%;
@@ -82,5 +108,31 @@ export default {
     background-color: #262942;
     color: white;
     font-size: 18px;
+}
+.delete-matches {
+  margin-top: 15px;
+}
+.delete-matches:hover {
+  background-color: red;
+  margin-bottom: 50px;
+}
+@media screen and (max-width: 768px) {
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: scroll;
+
+  background: url("../assets/loginbackground.svg") no-repeat center center fixed;;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  }
+  .myContainer {
+    padding-top: 100px;
+  }
 }
 </style>

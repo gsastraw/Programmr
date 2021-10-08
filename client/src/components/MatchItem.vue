@@ -1,5 +1,6 @@
 <template>
     <div class="match-info">
+        <b-avatar variant="primary" src="matches.avatarUrl" class="mr-3"></b-avatar>
         <div>Match id: {{ match._id }}</div>
         <div>was created at: {{ match.createdAt }}</div>
         <div>was updated at: {{ match.updatedAt }}</div>

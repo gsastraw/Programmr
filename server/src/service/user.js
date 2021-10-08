@@ -56,7 +56,13 @@ const createUser = async (id) => {
 
         return Promise.reject(new HttpError(`User with id ${id} already exists`, 400));
     } catch (error) {
-        return User.create({ googleId: id });
+        return User.create({ 
+            googleId: id,
+            matchInfo: {
+                accepted: [],
+                rejected: []
+            }
+        });
     }
 };
 

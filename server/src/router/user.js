@@ -223,6 +223,24 @@ router.get('/:userId/matches', (req, res) => {
         })
 });
 
+router.get('/:userId/matches/:matchId', (req, res) => {
+    MatchService.getMatchForUser(req.params.userId, req.params.matchId)
+        .then(match => {
+            return res.json(match);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
+                message: error
+            });
+        })
+});
+
 const formatValidationError = (error) => {
     if (!error || !error.details) {
         return "An error has occurred";
