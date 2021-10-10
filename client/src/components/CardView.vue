@@ -189,7 +189,7 @@ export default {
 
   .bio-text {
     /* display: none; */
-    font-size: 0.7em;
+    font-size: 3vw;
   }
 
   .name-text {
