@@ -105,7 +105,7 @@ export default {
   color: white;
 }
 .bio-text {
-  font-size: 1.4em;
+  font-size: 1.2em;
   color: white;
 }
 .button {
@@ -134,7 +134,7 @@ export default {
   align-items: center;
   display: flex;
   position: relative;
-  width: 350px;
+  max-width: 100%;
   height: 35vh;
   /* border-radius: 10px; */
   background-color: rgba(114, 204, 255, 0.23);
@@ -150,17 +150,52 @@ export default {
   width: 100%;
   background: none;
   height: 100%;
+  max-width: 100%;
   object-fit: cover;
 }
 
 .bio-text {
   /* display: none; */
-  font-size: 1em;
+  font-size: 2.2vw;
 }
 
 .name-text {
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 2.8vw;
+}
+
+@media screen and (max-width: 450px) {
+  .card-container {
+  align-items: center;
+  display: flex;
+  position: relative;
+  width: 280px;
+  height: 30vh;
+  /* border-radius: 10px; */
+  background-color: rgba(114, 204, 255, 0.23);
+}
+  .card-container .text-container {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .profile-container {
+    width: 100%;
+    background: none;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .bio-text {
+    /* display: none; */
+    font-size: 0.7em;
+  }
+
+  .name-text {
+    font-weight: bold;
+    font-size: 1.1em;
+  }
 }
 }
 </style>
