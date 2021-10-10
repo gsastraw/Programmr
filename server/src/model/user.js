@@ -37,23 +37,6 @@ const matchInfoSchema = new mongoose.Schema({
     rejected: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
-matchInfoSchema.methods.contains = function(userId) {
-    return this.accepted.includes(userId) || this.rejected.includes(userId);
-}
-
-matchInfoSchema.methods.add = function(userId, status) {
-    switch (status) {
-        case "accept":
-            this.accepted.push(userId);
-            break;
-        case "reject":
-            this.rejected.push(userId);
-            break;
-    }
-
-    this.save();
-}
-
 const userSchema = new mongoose.Schema({
     googleId: {
         type: String,

@@ -267,6 +267,24 @@ router.post('/:userId/match', (req, res) => {
         })
 });
 
+router.get('/:userId/suggest', (req, res) => {
+    UserService.getSuggestionsForUser(req.params.userId)
+        .then(suggestions => {
+            return res.json(suggestions);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
+                message: error
+            });
+        })
+})
+
 const formatValidationError = (error) => {
     if (!error || !error.details) {
         return "An error has occurred";

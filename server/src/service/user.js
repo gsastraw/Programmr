@@ -158,7 +158,7 @@ const addMatchDecision = async (id, details) => {
 
         user.addMatchDecision(target._id, status);
 
-        if (target.matchInfo.contains(user._id)) {
+        if (target.hasMatchDecision(user._id)) {
             await Match.create({ profiles: [user._id, target._id] });
 
             return Promise.resolve({
@@ -169,6 +169,26 @@ const addMatchDecision = async (id, details) => {
         return Promise.resolve({
             matched: false
         });
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+const getSuggestionsForUser = async (id) => {
+    try {
+        const user = await getUser(id);
+        const matchInfo = user.matchInfo;
+
+        return User.aggregate([
+            { $sample: { size: DEFAULT_PAGE_SIZE } },
+            { $project: { _id: 0, id: '$googleId', profile: 1 } },
+            { $match: { $and: [
+                { _id: { $ne: user._id } },
+                { _id: { $nin: matchInfo.accepted } },
+                { _id: { $nin: matchInfo.rejected } },
+                { profile: { $exists: true } }
+            ] } }
+        ]).exec();
     } catch (error) {
         return Promise.reject(error);
     }
@@ -185,7 +205,8 @@ const UserService = {
     getUserProfile,
     createUserProfile,
     updateUserProfile,
-    addMatchDecision
+    addMatchDecision,
+    getSuggestionsForUser
 };
 
 module.exports = UserService;
