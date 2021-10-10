@@ -241,6 +241,32 @@ router.get('/:userId/matches/:matchId', (req, res) => {
         })
 });
 
+router.post('/:userId/match', (req, res) => {
+    const {error, _} = UserCommands.matchDecisionCommand.validate(req.body);    
+
+    if (error) {
+        return res.status(400).send({
+            message: formatValidationError(error)
+        });
+    }
+
+    UserService.addMatchDecision(req.params.userId, req.body)
+        .then(body => {
+            return res.json(body);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
+                message: error
+            });
+        })
+});
+
 const formatValidationError = (error) => {
     if (!error || !error.details) {
         return "An error has occurred";

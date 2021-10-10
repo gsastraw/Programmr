@@ -57,9 +57,19 @@ const createUserMatch = Joi.object({
         .required()
 });
 
+const matchDecisionCommand = Joi.object({
+    id: Joi.string()
+        .alphanum()
+        .required(),
+    status: Joi.string()
+        .valid('accept', 'reject')
+        .required()
+});
+
 module.exports = {
     createUser,
     createUserProfile,
     updateUserProfile,
-    createUserMatch
+    createUserMatch,
+    matchDecisionCommand
 }
