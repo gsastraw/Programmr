@@ -2,12 +2,12 @@
 <div>
   <div v-if="isVisible">
   <Vue2InteractDraggable
-  :interact-out-of-sight-x-coordinate="400"
+  :interact-out-of-sight-x-coordinate="200"
   :interact-max-rotation="15"
   :interact-lock-swipe-down="true"
   :interact-lock-swipe-up="true"
-  :interact-x-threshold="200"
-  :interact-y-threshold="200"
+  :interact-x-threshold="100"
+  :interact-y-threshold="100"
   @draggedLeft="lastUser"
   @draggedRight="nextUser">
   <div class="card-container">
@@ -118,7 +118,7 @@ export default {
   position: relative;
   height: 400px;
   border-radius: 10px;
-  padding: 20px;
+  padding: 0px;
   background-color: rgba(114, 204, 255, 0.23);
 }
 
@@ -129,35 +129,38 @@ export default {
   object-fit: cover;
 }
 
-@media screen and (min-width: 768px) {
-  .card-container {
-    background-color: rgba(114, 204, 255, 0.23);
-  }
-    .profile-container {
-    background: none;
-  }
-}
-
 @media screen and (max-width: 768px) {
   .card-container {
-    background-color: rgba(114, 204, 255, 0.23);
-  }
+  align-items: center;
+  display: flex;
+  position: relative;
+  width: 350px;
+  height: 35vh;
+  /* border-radius: 10px; */
+  background-color: rgba(114, 204, 255, 0.23);
+}
 
-  .profile-container {
-    width: 240px;
-    height: 280px;
-    background: none;
-  }
+.card-container .text-container {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
 
-  .bio-text {
-    top: 52vh;
-    left: 0.5%;
-    font-weight: bolder;
-  }
+.profile-container {
+  width: 100%;
+  background: none;
+  height: 100%;
+  object-fit: cover;
+}
 
-  .name-text {
-    top: 45vh;
-    right: -1.3vw;
-  }
+.bio-text {
+  /* display: none; */
+  font-size: 1em;
+}
+
+.name-text {
+  font-weight: bold;
+  font-size: 1.5em;
+}
 }
 </style>

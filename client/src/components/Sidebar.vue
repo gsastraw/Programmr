@@ -73,4 +73,15 @@ span {
   height: 120px;
   padding: 12px;
 }
+@media only screen and (max-width: 768px) {
+    .burger-menu {
+    position: relative;
+    width: 75px;
+    height: 55px;
+    left: 40%;
+    top: 25px;
+    outline: 0;
+    border: none;
+  }
+}
 </style>
