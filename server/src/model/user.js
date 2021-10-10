@@ -33,9 +33,26 @@ userProfileSchema.virtual('fullName').get(() => {
 });
 
 const matchInfoSchema = new mongoose.Schema({
-    accepted: [String],
-    rejected: [String]
+    accepted: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    rejected: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
+
+matchInfoSchema.methods.contains = function(userId) {
+    return this.accepted.includes(userId) || this.rejected.includes(userId);
+}
+
+matchInfoSchema.methods.add = function(userId, status) {
+    switch (status) {
+        case "accept":
+            this.accepted.push(userId);
+            break;
+        case "reject":
+            this.rejected.push(userId);
+            break;
+    }
+
+    this.save();
+}
 
 const userSchema = new mongoose.Schema({
     googleId: {
@@ -43,11 +60,35 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     profile: userProfileSchema,
-    matchInfo: matchInfoSchema
+    matchInfo: {
+        type: matchInfoSchema,
+        required: true,
+        default: {
+            accepted: [],
+            rejected: []
+        }
+    }
 },
 {
     timestamps: true
 });
+
+userSchema.methods.hasMatchDecision = function(userId) {
+    return this.matchInfo.accepted.includes(userId) || this.matchInfo.rejected.includes(userId);
+}
+
+userSchema.methods.addMatchDecision = function(userId, status) {
+    switch (status) {
+        case "accept":
+            this.matchInfo.accepted.push(userId);
+            break;
+        case "reject":
+            this.matchInfo.rejected.push(userId);
+            break;
+    }
+
+    this.save();
+}
 
 userSchema.plugin(findOrCreate);
 

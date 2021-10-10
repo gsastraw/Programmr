@@ -77,7 +77,7 @@ const deleteUser = async (id) => {
         await Match.deleteMany({ profiles: user._id }).exec();
         return User.deleteOne({ googleId: id });
     } catch (error) {
-        return Promise.reject(new HttpError(`User with id ${id} not found`, 404));
+        return Promise.reject(error);
     }
 }
 
@@ -91,7 +91,7 @@ const getUserProfile = async (id) => {
 
         return user.profile;
     } catch (error) {
-        return Promise.reject(new HttpError(`User with id '${id}' not found`, 404));
+        return Promise.reject(error);
     }
 }
 
@@ -107,7 +107,7 @@ const createUserProfile = async (id, details) => {
 
         return User.updateOne({ googleId: id }, {profile: command}).exec();
     } catch (error) {
-        return Promise.reject(new HttpError(`User with id '${id}' not found`, 404));
+        return Promise.reject(error);
     }
 };
 
@@ -121,11 +121,58 @@ const updateUserProfile = async (id, details) => {
 
         const command = _.pick(details, 'firstName', 'lastName', 'dob', 'location', 'bio', 'avatarUrl');
 
-        return User.updateOne({ googleId: id }, {profile: command}).exec();
+        const update = buildProfileUpdateParamters(command);
+
+        return User.updateOne({ googleId: id }, { $set: update }).exec();
     } catch (error) {
-        return Promise.reject(new HttpError(`User with id '${id}' not found`, 404));
+        return Promise.reject(error);
     }
 };
+
+const buildProfileUpdateParamters = (command) => {
+    const update = {};
+
+    Object.keys(command).forEach((key) => {
+        update[`profile.${key}`] = command[key];
+    })
+
+    return update;
+}
+
+const addMatchDecision = async (id, details) => {
+    try {
+        const user = await getUser(id);
+
+        const command = _.pick(details, 'id', 'status');
+        const {id: targetId, status} = command;
+
+        const target = await getUser(targetId);
+
+        if (user._id === target._id) {
+            return Promise.reject(new HttpError(`User with id '${id}' can't be matched to itself`, 400));
+        }
+
+        if (user.hasMatchDecision(target._id)) {
+            return Promise.reject(new HttpError(`User with id '${id}' already has match decision for user with id '${targetId}'`, 400));
+        }
+
+        user.addMatchDecision(target._id, status);
+
+        if (target.matchInfo.contains(user._id)) {
+            await Match.create({ profiles: [user._id, target._id] });
+
+            return Promise.resolve({
+                matched: true
+            })
+        }
+
+        return Promise.resolve({
+            matched: false
+        });
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
 
 const UserService = {
     DEFAULT_PAGE,
@@ -137,7 +184,8 @@ const UserService = {
     deleteUser,
     getUserProfile,
     createUserProfile,
-    updateUserProfile
+    updateUserProfile,
+    addMatchDecision
 };
 
 module.exports = UserService;

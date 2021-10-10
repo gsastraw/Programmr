@@ -21,7 +21,6 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }, 
     });
 
     mongoose.connection.db.collection("users").insertOne({
-        _id: "614b9bbcb97fb423ac92eb8f",
         googleId: "1",
         createdAt: "2021-09-22T21:10:20.503Z",
         updatedAt: "2021-09-22T21:10:20.503Z",
@@ -31,7 +30,6 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }, 
     });
 
     mongoose.connection.db.collection("users").insertOne({
-        _id: "614b9ef50c3a463234066f60",
         googleId: "2",
         createdAt: "2021-09-22T21:24:05.027Z",
         updatedAt: "2021-09-22T21:24:05.027Z",

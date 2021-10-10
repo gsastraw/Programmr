@@ -111,6 +111,20 @@ const getMatchesForUser = async (userId, page = DEFAULT_PAGE, pageSize = DEFAULT
     }
 }
 
+const deleteMatchesForUser = async (userId) => {
+    if (!userId) {
+        return Promise.reject(new HttpError('UserId not defined', 400))
+    }
+
+    try {
+        const user = await UserService.getUser(userId);
+
+        return Match.deleteMany({ profiles: user._id }).exec();
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
 const getMatchForUser = async (userId, matchId) => {
     if (!userId) {
         return Promise.reject(new HttpError('UserId not defined', 400))
@@ -119,9 +133,6 @@ const getMatchForUser = async (userId, matchId) => {
     if (!matchId) {
         return Promise.reject(new HttpError('MatchId not defined', 400))
     }
-
-    console.log(userId);
-    console.log(matchId);
 
     try {
         const user = await UserService.getUser(userId);
@@ -160,6 +171,7 @@ const MatchService = {
     createMatch,
     deleteMatch,
     getMatchesForUser,
+    deleteMatchesForUser,
     getMatchForUser,
     getMatchMessages
 }
