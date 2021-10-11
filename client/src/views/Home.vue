@@ -71,7 +71,7 @@ export default {
   min-width: 40%;
   margin-top: 10%;
   justify-content: flex-start;
-  padding: 20px 80px;
+  padding: 20px 70px;
 }
 .right-side {
   display: flex;
@@ -79,7 +79,7 @@ export default {
   align-items: flex-end;
   justify-content: flex-start;
   height: 100%;
-  width: 20px;
+  margin-right: 5%;
   min-width: 60%;
 }
 .kissing-people {
