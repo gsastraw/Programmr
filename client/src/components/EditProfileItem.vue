@@ -7,11 +7,11 @@
           <b-avatar v-bind:src=avatarUrl class="picture"></b-avatar>
           <div class="form-group">
             <label name="first-Name">First Name</label>
-            <input type="text" class="form-control" v-model=firstName id="InputFirstName">
+            <input type="text" class="form-control" v-model="firstName" id="InputFirstName">
           </div>
           <div class="form-group">
             <label name="last-Name">Last Name</label>
-            <input type="text" class="form-control" v-model=lastName id="InputLastName">
+            <input type="text" class="form-control" v-model="lastName" id="InputLastName">
           </div>
         </div>
         <div class="col-md-8" id="about-me">
