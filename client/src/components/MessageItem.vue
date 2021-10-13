@@ -6,7 +6,8 @@
 
 <script>
 export default {
-
+  name: 'messageView',
+  props: ['message']
 }
 </script>
 
