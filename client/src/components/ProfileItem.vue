@@ -24,7 +24,7 @@ export default {
   name: 'profile-item',
   mounted() {
     console.log('PAGE is loaded!')
-    Api.get('/users/2/profile')
+    Api.get('/users/1/profile')
       .then(response => {
         console.log(response)
         this.users = response.data

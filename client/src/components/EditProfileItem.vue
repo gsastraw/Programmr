@@ -1,25 +1,29 @@
 <template>
-<div>
 <div class="container">
-  <div class="row">
-    <div class="col-md-4">
-      <b-avatar v-if="users.avatarUrl != null" v-bind:src="users.avatarUrl" class="picture"></b-avatar>
-      <div class="form-group" id="name-input">
-          <label for="InputFirstName">First Name:</label>
-          <input v-bind:users="firstName" type="Name" class="form-control" id="InputFirstName">
-            <label for="InputLastName">Last Name:</label>
-          <input v-bind:users="lastName" type="Name" class="form-control" id="InputLastName">
+  <div class="form-group" id="name-input">
+    <form v-on:submit.prevent="updateProfile">
+      <div class="row">
+        <div class="col-md-4">
+          <b-avatar v-bind:src=avatarUrl class="picture"></b-avatar>
+          <div class="form-group">
+            <label name="first-Name">First Name</label>
+            <input type="text" class="form-control" v-model=firstName id="InputFirstName">
+          </div>
+          <div class="form-group">
+            <label name="last-Name">Last Name</label>
+            <input type="text" class="form-control" v-model=lastName id="InputLastName">
+          </div>
+        </div>
+        <div class="col-md-8" id="about-me">
+          <h3 class="BIO">About me</h3>
+          <textarea v-model="bio" class="form-control" id="biotextarea"></textarea>
+        </div>
       </div>
-      <p class="DOB"> {{ users.dob }}</p>
-      <p class="Location"> {{ users.location }}</p>
-    </div>
-    <div class="col-md-8" id="about-me">
-      <h3 class="BIO">About me</h3>
-      <textarea v-bind:users="bio" class="form-control" id="biographyTextarea1"></textarea>
-    </div>
+        <div class="form-group">
+          <button class="btn btn-primary" id="update-button">Update</button>
+        </div>
+    </form>
   </div>
-</div>
-    <b-button class="button" v-on:click="updateProfile()" squared>Submit</b-button>
 </div>
 </template>
 
@@ -28,54 +32,43 @@ import { Api } from '@/Api'
 
 export default {
   name: 'edit-profile-item',
-  mounted() {
-    console.log('PAGE is loaded!')
-    Api.get('/users/2/profile')
-      .then(response => {
-        console.log(response)
-        this.users = response.data
-      })
-      .catch(error => {
-        this.users = []
-        console.log(error)
-        //   TODO: display some error message instead of logging to console
-      })
-      .then(() => {
-        console.log('This runs every time after success or error.')
-      })
-  },
   data() {
     return {
-      users: [],
       text: '',
-      firstName: String,
-      lastName: String,
-      bio: String
+      firstName: '',
+      lastName: ''
     }
   },
   methods: {
     updateProfile() {
-      Api.patch('/users/2/profile')
-        .then(response => {
-          this.users = response.data.users
-        })
-        .catch(error => {
-          this.message = error
-        })
+      const r = confirm('Do you want to save these changes?')
+      if (r === true) {
+        Api.patch('/users/1/profile', { firstName: this.firstName, lastName: this.lastName, bio: this.bio })
+          .then(response => {
+            console.log(response)
+          })
+          .catch(error => {
+            this.users = []
+            console.log(error)
+          })
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 768px) {
 p {
   font-size: 50px;
   padding-top: 0px;
   color: white;
 }
 #about-me {
-  margin-top: 0px;
+  padding-top: 100px;
+}
+#biotextarea {
+    height: 85%;
 }
 }
 #name-input {
@@ -93,20 +86,22 @@ p {
     border-color: rgba(114,204,255,0.3);
     color: white;
 }
-#biographyTextarea1 {
+#biotextarea {
     height: 65%;
     background-color: rgba(114,204,255,0.3);
     border-color: rgba(114,204,255,0.3);
     color: white;
 }
-.button {
-    margin-top: 5px;
+#update-button {
+    margin-top: 10px;
     background: #7e69ff;
+    border-color: #7e69ff;
+    margin-bottom: 10px;
 }
-  .container {
+.container {
     background-color: rgba(114,204,255,0.23);
     margin-top: 100px;
-  }
+}
 .user-container {
   padding-top: 80px;
 }
@@ -129,7 +124,7 @@ p {
   color: white;
 }
 #about-me {
-  padding-top: 10%;
+  margin-top: 0px;
 }
 .edit-button {
   background-color:#7e69ff;

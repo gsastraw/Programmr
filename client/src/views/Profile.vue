@@ -14,6 +14,7 @@ import ProfileItem from '../components/ProfileItem.vue'
 
 export default {
   name: 'profile',
+  props: ['users'],
   components: {
     'profile-item': ProfileItem,
     Sidebar

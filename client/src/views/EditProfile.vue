@@ -3,6 +3,7 @@
     <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
     <Sidebar/>
     <edit-profile-item v-bind:user="users"/>
+    <b-button to="/profile/" class="button" squared>Back</b-button>
 </div>
 </template>
 
@@ -11,6 +12,7 @@ import Sidebar from '../components/Sidebar.vue'
 import EditProfileItem from '../components/EditProfileItem.vue'
 export default {
   name: 'EditProfile',
+  props: ['users'],
   components: {
     'edit-profile-item': EditProfileItem,
     Sidebar
@@ -19,6 +21,10 @@ export default {
 </script>
 
 <style scoped>
+.button {
+    margin-top: 5px;
+    background: #7e69ff;
+}
 h1 {
     color: white;
     font-weight: bold;
