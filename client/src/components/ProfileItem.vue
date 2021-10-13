@@ -10,7 +10,7 @@
     </div>
     <div class="col-md-8" id="about-me">
       <h3 class="BIO">About me</h3>
-      <p class="BIO">{{ users.bio }}</p>
+      <p class="BIO" id="biotextarea">{{ users.bio }}</p>
     </div>
   </div>
 </div>
@@ -48,21 +48,23 @@ export default {
 </script>
 
 <style scoped>
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 768px) {
 p {
   font-size: 50px;
   padding-top: 0px;
   color: white;
 }
 #about-me {
-  margin-top: 0px;
+  padding-top: 100px;
+}
+#biotextarea {
+    height: 85%;
 }
 }
-
-  .container {
+.container {
     background-color: rgba(114,204,255,0.23);
     margin-top: 100px;
-  }
+}
 .user-container {
   padding-top: 80px;
 }
@@ -85,7 +87,10 @@ p {
   color: white;
 }
 #about-me {
-  padding-top: 100px;
+  margin-top: 0px;
+}
+#biotextarea {
+    height: 65%;
 }
 .edit-button {
   background-color:#7e69ff;

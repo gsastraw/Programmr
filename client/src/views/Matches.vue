@@ -33,7 +33,7 @@ export default {
 
   mounted() {
     console.log('PAGE is loaded!')
-    Api.get('/matches')
+    Api.get('/users/1/matches')
       .then(response => {
         console.log(response)
         this.matches = response.data
@@ -64,13 +64,16 @@ export default {
         // TODO: catch error
     },
     deleteMatches() {
-      Api.delete('/matches')
-        .then(response => {
-          this.matches = response.data.matches
-        })
-        .catch(error => {
-          this.message = error
-        })
+      const r = confirm('This will delete all matches in the system, continue?')
+      if (r === true) {
+        Api.delete('/matches')
+          .then(response => {
+            this.matches = response.data.matches
+          })
+          .catch(error => {
+            this.message = error
+          })
+      }
     }
   }
 }
