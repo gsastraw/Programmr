@@ -8,6 +8,17 @@ const createMatch = Joi.object({
             .required()
 });
 
+const createMatchMessage = Joi.object({
+    sender: Joi.string()
+        .alphanum()
+        .required(),
+    content: Joi.string()
+        .alphanum()
+        .min(1)
+        .required()
+});
+
 module.exports = {
-    createMatch
+    createMatch,
+    createMatchMessage
 }

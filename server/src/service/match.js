@@ -164,6 +164,28 @@ const getMatchMessages = async (id) => {
     return match.messages;
 }
 
+const createMatchMessage = async (id, sender, content) => {
+    if (!id) {
+        return Promise.reject(new HttpError("Id not defined", 400));
+    }
+
+    const match = await Match.findById(id).exec()
+
+    if (!match) {
+        return Promise.reject(new HttpError(`Match with id '${id}' not found`, 404));
+    }
+
+    try {
+        const user = await UserService.getUser(sender);
+
+        match.addMessage(user._id, content);
+
+        return Promise.resolve();
+    } catch(error) {
+        return Promise.reject(error);
+    }
+}
+
 const MatchService = {
     listMatches,
     deleteMatches,
@@ -173,7 +195,8 @@ const MatchService = {
     getMatchesForUser,
     deleteMatchesForUser,
     getMatchForUser,
-    getMatchMessages
+    getMatchMessages,
+    createMatchMessage
 }
 
 module.exports = MatchService;
