@@ -8,8 +8,8 @@
   :interact-lock-swipe-up="true"
   :interact-x-threshold="100"
   :interact-y-threshold="100"
-  @draggedLeft="lastUser"
-  @draggedRight="nextUser">
+  @draggedLeft="swipeLeft"
+  @draggedRight="swipeRight">
   <div class="card-container">
     <b-container class="img-container">
       <b-img v-if="users[index].profile.avatarUrl != null" v-bind:src="users[index].profile.avatarUrl" class="profile-container"></b-img>
@@ -54,29 +54,36 @@ export default {
     }
   },
   mounted() {
-    UserService.getAllUsers().then(response => {
+    // currently just gets the user's recommended users at position 2 in the array
+    UserService.getRecommendedUsers(2).then(response => {
       this.users = response.data
     })
   },
   methods: {
-    nextUser() {
+    swipeRight() {
+      UserService.postSwipeStatus(2, this.users[this.index].id, 'accept').then(response => {
+        console.log(response)
+      })
       // eslint-disable-next-line no-return-assign
       setTimeout(() => this.isVisible = false, 500)
       setTimeout(() => {
         this.index++
-        if (this.users[this.index] == null) {
+        if (this.index >= this.users.length) {
           this.index = 0
         }
         this.isVisible = true
       }, 500)
     },
-    lastUser() {
+    swipeLeft() {
+      UserService.postSwipeStatus(2, this.users[this.index].id, 'reject').then(response => {
+        console.log(response)
+      })
       // eslint-disable-next-line no-return-assign
       setTimeout(() => this.isVisible = false, 500)
       setTimeout(() => {
-        this.counter--
-        if (this.users[this.index] == null) {
-          this.counter = 0
+        this.index--
+        if (this.index >= this.users.length) {
+          this.index = 0
         }
         this.isVisible = true
       }, 500)
