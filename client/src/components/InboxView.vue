@@ -163,41 +163,40 @@ width: 100px;
 }
 /*Idk what these last ones do but they probably will be the chat bubbles */
 /*.message {
-				display: flex;
-				margin-bottom: 15px;
-				
-				.message-inner {
-					.username {
-						color: #888;
-						font-size: 16px;
-						margin-bottom: 5px;
-						padding-left: 15px;
-						padding-right: 15px;
-					}
-					.content {
-						display: inline-block;
-						padding: 10px 20px;
-						background-color: #F3F3F3;
-						border-radius: 999px;
-						color: #333;
-						font-size: 18px;
-						line-height: 1.2em;
-						text-align: left;
-					}
-				}
-				&.current-user {
-					margin-top: 30px;
-					justify-content: flex-end;
-					text-align: right;
-					.message-inner {
-						max-width: 75%;
-						.content {
-							color: #FFF;
-							font-weight: 600;
-							background-color: #ea526f;
-						}
-					}
-				} */
+display: flex;
+margin-bottom: 15px;
+.message-inner {
+.username {
+color: #888;
+font-size: 16px;
+margin-bottom: 5px;
+padding-left: 15px;
+padding-right: 15px;
+}
+.content {
+display: inline-block;
+padding: 10px 20px;
+background-color: #F3F3F3;
+border-radius: 999px;
+color: #333;
+font-size: 18px;
+line-height: 1.2em;
+text-align: left;
+}
+}
+&.current-user {
+margin-top: 30px;
+justify-content: flex-end;
+text-align: right;
+.message-inner {
+max-width: 75%;
+.content {
+color: #FFF;
+font-weight: 600;
+background-color: #ea526f;
+}
+}
+} */
 .chat-box .message {
 display: flex;
 margin-bottom: 15px;
