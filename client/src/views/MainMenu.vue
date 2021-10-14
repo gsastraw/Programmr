@@ -3,7 +3,7 @@
   <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
   <Sidebar/>
   <div class="cardview-position">
-    <CardView>
+    <CardView :userID=2>
     </CardView>
     </div>
 </div>

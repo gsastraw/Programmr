@@ -37,6 +37,9 @@ export default {
   components: {
     Vue2InteractDraggable
   },
+  props: {
+    userID: Number
+  },
   data() {
     // TODO: Add REST route to push all potential users from location
     return {
@@ -55,13 +58,13 @@ export default {
   },
   mounted() {
     // currently just gets the user's recommended users at position 2 in the array
-    UserService.getRecommendedUsers(2).then(response => {
+    UserService.getRecommendedUsers(this.userID).then(response => {
       this.users = response.data
     })
   },
   methods: {
     swipeRight() {
-      UserService.postSwipeStatus(2, this.users[this.index].id, 'accept').then(response => {
+      UserService.postSwipeStatus(this.userID, this.users[this.index].id, 'accept').then(response => {
         console.log(response)
       })
       // eslint-disable-next-line no-return-assign
@@ -75,7 +78,7 @@ export default {
       }, 500)
     },
     swipeLeft() {
-      UserService.postSwipeStatus(2, this.users[this.index].id, 'reject').then(response => {
+      UserService.postSwipeStatus(this.userID, this.users[this.index].id, 'reject').then(response => {
         console.log(response)
       })
       // eslint-disable-next-line no-return-assign
