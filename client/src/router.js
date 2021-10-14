@@ -6,6 +6,7 @@ import About from './views/About.vue'
 import Profile from './views/Profile.vue'
 import Matches from './views/Matches.vue'
 import EditProfile from './views/EditProfile.vue'
+import Inbox from './views/Inbox.vue'
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ const router = new Router({
       path: '/profile/edit',
       name: 'edit',
       component: EditProfile
+    },
+    {
+      path: '/matches/chat',
+      name: 'inbox',
+      component: Inbox
     }
   ]
 })

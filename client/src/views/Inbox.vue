@@ -2,17 +2,21 @@
 <div class="background">
     <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
     <Sidebar/>
+    <InboxView />
   </div>
 </template>
 
 <script>
 import Sidebar from '../components/Sidebar.vue'
+import InboxView from '../components/InboxView.vue'
 
 export default {
   name: 'inbox',
-  props: [''],
   components: {
-    Sidebar
+    Sidebar,
+    InboxView
+  },
+  data() {
   }
 
 }
