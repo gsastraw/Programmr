@@ -4,23 +4,41 @@
     <Sidebar/>
     <edit-profile-item v-bind:user="users"/>
     <b-button to="/profile/" class="button" squared>Back</b-button>
+    <b-button class="button" id="delete-user" squared v-on:click="deleteUser()">Delete account</b-button>
 </div>
 </template>
 
 <script>
 import Sidebar from '../components/Sidebar.vue'
 import EditProfileItem from '../components/EditProfileItem.vue'
+import { Api } from '@/Api'
+
 export default {
   name: 'EditProfile',
   props: ['users'],
   components: {
     'edit-profile-item': EditProfileItem,
     Sidebar
+  },
+  methods: {
+    deleteUser() {
+      const r = confirm('Are you sure you want to delete your account? This is irreversible.')
+      if (r === true) {
+        Api.delete('/users/1')
+          .then(response => {
+            console.log('User deleted')
+          })
+        window.location.href = '/'
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
+#delete-user {
+  background-color: red;
+}
 .button {
     margin-top: 5px;
     background: #7e69ff;
