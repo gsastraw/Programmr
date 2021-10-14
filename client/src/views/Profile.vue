@@ -3,7 +3,7 @@
     <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
     <Sidebar/>
     <!--<h1>Profile for user id: {{ $route.params.id }}</h1>-->
-    <profile-item :userID=2 />
+    <profile-item :userID=1 />
     <b-button to="/profile/edit" class="button" squared>Edit</b-button>
 </div>
 </template>

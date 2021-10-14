@@ -1,11 +1,19 @@
 <template>
-<div class="chat-box-container">
-  <div class="chat-box">
-    <div class="chat-box-bar-container">
-    <div class="chat-box-bar">
-      </div>
-    </div>
-  </div>
+<div class="view chat">
+<header>
+  <b-button to="/matches/" class="button" >Back</b-button>
+  <h1>Firstname Lastname</h1>
+</header>
+<section class="chat-box">
+  <!-- div v-for="message in messages" etc -->
+  //messages
+</section>
+<footer>
+  <form @submit.prevent="">
+    <input type="text" placeholder="Write a message..."/>
+    <input type="submit" value="Send"/>
+  </form>
+</footer>
 </div>
 </template>
 
@@ -35,42 +43,127 @@ export default {
 </script>
 
 <style>
-.chat-box-container {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  height: 80%;
-  min-width: 80%;
-  justify-content: flex-start;
-  margin-top: 20%;
+@media screen and (min-width: 768px) {
+h1 {
+float: left;
+margin-left: 50px;
 }
-.chat-box {
-  width: 100%;
-  max-width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.26);
-  border: 1px solid #000000;
-  box-sizing: border-box;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-.chat-box-bar-container {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  height: 80%;
-  min-width: 80%;
-  justify-content: flex-start;
-  margin-top: 20%;
+* {/* Entire page */
+font-family: Avenir, Helvetica, Arial, sans-serif;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
 }
-.chat-box-bar {
-  width: 100%;
-  height: 15%;
-  background: rgba(0, 0, 0, 0.41);
+.button {
+  float: left;
+  width: 60px;
+  margin-left: 0px;
+  border-radius: 8px 8px 8px 8px;
+  background-color: #7e69ff;
 }
-.text-box-container {
-
+.view {/*The inbox */
+display: flex;
+justify-content: center;
+min-height: 100vh;
 }
-.text-box {
-
+.view label {/*Idk yet*/
+display: block;
+margin-bottom: 5px;
+color: #AAA;
+font-size: 16px;
+transition: 0.4s;
+}
+input[type="submit"] {/*Send button */
+appearance: none;
+border: none;
+outline: none;
+background: none;
+display: block;
+width: 100%;
+padding: 10px 15px;
+background-color: #7e69ff;
+border-radius: 8px;
+color: #FFF;
+font-size: 18px;
+font-weight: 700;
+}
+.chat {/* */
+flex-direction: column;
+}
+.chat header {/*Where it says inbox */
+position: relative;
+display: block;
+width: 100%;
+padding: 10px 30px 10px;
+background: #1F2135;
+margin-top: 50px;
+}
+h1 {
+color: #FFF;
+}
+.chat-box { /*Area/container where chat messages will appear */
+background-color: #262942;
+box-shadow: 0px 0px 12px rgba(100, 100, 100, 0.2);
+flex: 1 1 100%;
+padding: 30px;
+color: white;
+}
+.content { /* */
+display: inline-block;
+padding: 10px 20px;
+background-color: #343859;
+border-radius: 999px;
+color: #333;
+font-size: 18px;
+line-height: 1.2em;
+text-align: left;
+}
+footer { /*Area at the bottom */
+position: sticky;
+bottom: 0px;
+background-color: #1F2135;
+padding: 30px;
+box-shadow: 0px 0px 12px rgba(100, 100, 100, 0.2);
+}
+form { /*Where you write the message */
+display: flex;
+}
+form input[type="text"] { /*Where you write the message */
+flex: 1 1 100%;
+appearance: none;
+border: none;
+outline: none;
+background: none;
+display: block;
+width: 100%;
+padding: 10px 15px;
+border-radius: 8px 0px 0px 8px;
+color: white;
+font-size: 18px;
+box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+background-color: #343859;
+transition: 0.4s;
+}
+input[type="submit"] { /*send button */
+appearance: none;
+border: none;
+outline: none;
+background: none;
+display: block;
+padding: 10px 15px;
+border-radius: 0px 8px 8px 0px;
+background-color: #7e69ff;
+color: #FFF;
+font-size: 18px;
+font-weight: 700;
+width: 100px;
+}
+/*Idk what these last ones do but they probably will be the chat bubbles */
+.chat-box .message {
+display: flex;
+margin-bottom: 15px;
 }
 </style>
