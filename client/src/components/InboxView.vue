@@ -42,7 +42,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @media screen and (min-width: 768px) {
 h1 {
 float: left;
