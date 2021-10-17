@@ -877,6 +877,47 @@
 					"response": []
 				},
 				{
+					"name": "SendMatchMessage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"sender\": \"1\",\r\n    \"content\": \"Message\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/matches/{{matchId}}/conversation",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"matches",
+								"{{matchId}}",
+								"conversation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "DeleteMatch",
 					"event": [
 						{
@@ -1866,6 +1907,14 @@
 		{
 			"key": "matchId",
 			"value": "000000000000"
+		},
+		{
+			"key": "user1Id",
+			"value": ""
+		},
+		{
+			"key": "user2Id",
+			"value": ""
 		}
 	]
 }
