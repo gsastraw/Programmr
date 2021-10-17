@@ -6,12 +6,11 @@
 </header>
 <section class="chat-box">
   <!-- div v-for="message in messages" etc -->
-  //messages
-  {{ matchData }}
+  {{ messages }}
 </section>
 <footer>
-  <form @submit.prevent="">
-    <input type="text" placeholder="Write a message..."/>
+  <form @submit.prevent="sendMessage">
+    <input type="text" placeholder="Write a message..." v-model="message"/>
     <input type="submit" value="Send"/>
   </form>
 </footer>
@@ -20,23 +19,40 @@
 
 <script>
 import MatchService from '../services/MatchService'
+import { Api } from '@/Api'
 
 export default {
   name: 'inbox-view',
   components: {
 
   },
-  props: ['matchId'],
+  props: {
+    matchId: String,
+    userId: Number
+  },
   mounted() {
     console.log(this.matchId)
     MatchService.getMatch(this.matchId).then(response => {
       console.log(response)
       this.matchData = response.data
     })
+    MatchService.getMessage(this.matchId).then(response => {
+      this.messages = response.data
+    })
   },
   data() {
     return {
-      matchData: []
+      matchData: [],
+      messages: [],
+      message: ''
+    }
+  },
+  methods: {
+    sendMessage() {
+      Api.post('/matches/' + this.matchId + '/conversation', {
+        sender: this.userId,
+        content: this.message
+      })
     }
   }
 }
@@ -106,10 +122,16 @@ color: #FFF;
 }
 .chat-box { /*Area/container where chat messages will appear */
 background-color: #262942;
+width: 100%;
+top: 0;
+bottom: 0;
+height: 100%;
 box-shadow: 0px 0px 12px rgba(100, 100, 100, 0.2);
 flex: 1 1 100%;
 padding: 30px;
 color: white;
+overflow-x: hidden;
+overflow-y: scroll;
 }
 .content { /* */
 display: inline-block;

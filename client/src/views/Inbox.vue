@@ -1,8 +1,9 @@
 <template>
 <div class="background">
-    <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
     <Sidebar/>
-    <InboxView :matchId=this.$route.params.userId>
+      <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
+
+    <InboxView :userId=1 :matchId=this.$route.params.userId>
     </InboxView>
   </div>
 </template>
@@ -37,7 +38,7 @@ export default {
   left: 0;
   bottom: 0;
   right: 0;
-  overflow: hidden;
+  overflow: visible;
 
   background: url("../assets/loginbackground.svg") no-repeat center center fixed;;
   -webkit-background-size: cover;
@@ -46,7 +47,7 @@ export default {
   background-size: cover;
 }
 .logo {
-  position: fixed;
+  position: absolute;
   left: 1%;
   width: 100px;
   top: 1%;
