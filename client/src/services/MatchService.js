@@ -2,7 +2,7 @@ import { Api } from '../Api'
 
 class MatchService {
   async getMatch(matchId) {
-    return await Api.get('/matches' + matchId)
+    return await Api.get('/matches/' + matchId)
   }
 }
 

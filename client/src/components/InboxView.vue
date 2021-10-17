@@ -7,6 +7,7 @@
 <section class="chat-box">
   <!-- div v-for="message in messages" etc -->
   //messages
+  {{ matchData }}
 </section>
 <footer>
   <form @submit.prevent="">
@@ -25,13 +26,12 @@ export default {
   components: {
 
   },
-  props: {
-    matchId: String,
-    userId: String
-  },
+  props: ['matchId'],
   mounted() {
+    console.log(this.matchId)
     MatchService.getMatch(this.matchId).then(response => {
-
+      console.log(response)
+      this.matchData = response.data
     })
   },
   data() {
