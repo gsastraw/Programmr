@@ -2,7 +2,7 @@
 <div class="view chat">
 <header>
   <b-button to="/matches/" class="button" >Back</b-button>
-  <h1>{{ this.matchedUser.profile.firstName + this.matchedUser.profile.lastName }}</h1>
+  <h1>{{ this.matchedUser.profile.firstName + ' ' + this.matchedUser.profile.lastName }}</h1>
 </header>
 <section class="chat-box">
   <div v-for="message in messages" :key="message.content">
@@ -55,8 +55,6 @@ export default {
       const matchedUserObject = this.allUsers.find(user => user._id === getMatchedUserObjectId)
       this.matchedUser = matchedUserObject
     })
-    // const getMatchedUserGoogleId = this.allUsers.filter(this.allUsers.has(getMatchedUserObjectId))
-    // console.log(getMatchedUserGoogleId)
   },
   data() {
     return {
@@ -67,11 +65,6 @@ export default {
       matchedUser: [],
       message: ''
     }
-  },
-  computed: {
-    // yourMessages: function () {
-    //   return Object.values(this.user).filter(users => this.messages.includes(users._id))
-    // }
   },
   methods: {
     sendMessage() {
