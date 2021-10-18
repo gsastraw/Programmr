@@ -12,7 +12,7 @@
   @draggedRight="swipeRight">
   <div class="card-container">
     <b-container class="img-container">
-      <b-img v-if='this.recommendedUsers[index].avatarUrl' v-bind="this.recommendedUsers[index].profile.avatarUrl" class="profile-container"></b-img>
+      <b-img v-if='this.recommendedUsers[index].profile.avatarUrl' v-bind="this.recommendedUsers[index].profile.avatarUrl" class="profile-container"></b-img>
     </b-container>
     <b-container class="text-container">
       <b-col class="name-text">
@@ -42,7 +42,7 @@ export default {
   data() {
     // TODO: Add REST route to push all potential users from location
     return {
-      isVisible: true,
+      isVisible: false,
       index: 0,
       currentUser: [],
       allUsers: [],
@@ -65,6 +65,9 @@ export default {
         console.log(this.currentUser)
         const newArr = this.recommendedUsers.filter(user => user.id !== this.userID.toString() && !this.currentUser.matchInfo.accepted.includes(this.allUsers.find(u => u.googleId === user.id)._id) && !this.currentUser.matchInfo.rejected.includes(this.allUsers.find(u => u.googleId === user.id)._id))
         this.recommendedUsers = newArr
+        if (this.recommendedUsers.length > 0) {
+          this.isVisible = true
+        }
         console.table(newArr)
       }).catch(error => {
         alert(error)
@@ -83,7 +86,11 @@ export default {
       setTimeout(() => this.isVisible = false, 500)
       setTimeout(() => {
         this.index++
-        this.isVisible = true
+        if (this.recommendedUsers.length <= this.index) {
+          this.isVisible = false
+        } else {
+          this.isVisible = true
+        }
       }, 500)
     },
     swipeLeft() {
@@ -96,8 +103,11 @@ export default {
       setTimeout(() => this.isVisible = false, 500)
       setTimeout(() => {
         this.index++
-        //
-        this.isVisible = true
+        if (this.recommendedUsers.length <= this.index) {
+          this.isVisible = false
+        } else {
+          this.isVisible = true
+        }
       }, 500)
     }
   }
