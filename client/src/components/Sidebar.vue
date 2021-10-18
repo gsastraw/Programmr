@@ -11,7 +11,6 @@
       <b-link class="router-text" to="/mainmenu">mainMenu<span>( );</span></b-link>
       <b-link class="router-text" to="/matches">matches<span>( );</span></b-link>
       <b-link class="router-text" to="/profile">myProfile<span>( );</span></b-link>
-      <b-link class="router-text" to="/about">about<span>( );</span></b-link>
       <b-link class="router-text" to="/">logOut<span>( );</span></b-link>
     </b-sidebar>
   </div>
