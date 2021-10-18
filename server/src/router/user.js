@@ -241,6 +241,24 @@ router.get('/:userId/matches/:matchId', (req, res) => {
         })
 });
 
+router.delete('/:userId/matches/:matchId', (req, res) => {
+    MatchService.deleteMatchForUser(req.params.userId, req.params.matchId)
+        .then(_ => {
+            return res.sendStatus(200);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
+                message: error
+            });
+        })
+});
+
 router.post('/:userId/match', (req, res) => {
     const {error, _} = UserCommands.matchDecisionCommand.validate(req.body);    
 
