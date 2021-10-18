@@ -67,10 +67,13 @@ export default {
     }
   },
   methods: {
-    sendMessage() {
-      Api.post('/matches/' + this.matchId + '/conversation', {
+    async sendMessage() {
+      await Api.post('/matches/' + this.matchId + '/conversation', {
         sender: this.userId.toString(),
         content: this.message
+      })
+      Api.get('/matches/' + this.matchId + '/conversation').then(response => {
+        this.messages = response.data
       })
       console.log(this.userId)
       console.log(this.message)
