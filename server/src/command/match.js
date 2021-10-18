@@ -13,7 +13,6 @@ const createMatchMessage = Joi.object({
         .alphanum()
         .required(),
     content: Joi.string()
-        .alphanum()
         .min(1)
         .required()
 });

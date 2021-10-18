@@ -44,7 +44,7 @@ const router = new Router({
       component: EditProfile
     },
     {
-      path: '/matches/chat/:userId',
+      path: '/matches/chat/:matchId',
       name: 'inbox',
       component: Inbox,
       props: true

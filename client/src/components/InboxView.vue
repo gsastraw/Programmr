@@ -2,11 +2,15 @@
 <div class="view chat">
 <header>
   <b-button to="/matches/" class="button" >Back</b-button>
-  <h1>Firstname Lastname</h1>
+  <h1>{{ this.matchedUser.profile.firstName + this.matchedUser.profile.lastName }}</h1>
 </header>
 <section class="chat-box">
-  <!-- div v-for="message in messages" etc -->
-  {{ messages }}
+  <div v-for="message in messages" :key="message.content">
+  <div class="message" v-if="message.sender == matchedUser._id">
+  {{ message.content }}  <span class="timestamp">{{ new Date(message.createdAt).toLocaleString('se') }}</span>
+  </div>
+  <div class="message match-message" v-else>{{ message.content }} <span class="timestamp">{{ new Date(message.createdAt).toLocaleString('se') }}</span></div>
+  </div>
 </section>
 <footer>
   <form @submit.prevent="sendMessage">
@@ -19,6 +23,7 @@
 
 <script>
 import MatchService from '../services/MatchService'
+import UserService from '../services/UserService'
 import { Api } from '@/Api'
 
 export default {
@@ -31,28 +36,51 @@ export default {
     userId: Number
   },
   mounted() {
-    console.log(this.matchId)
-    MatchService.getMatch(this.matchId).then(response => {
+    const pleaseWait = []
+    pleaseWait.push(MatchService.getMatch(this.matchId).then(response => {
       console.log(response)
       this.matchData = response.data
-    })
-    MatchService.getMessage(this.matchId).then(response => {
+    }))
+    pleaseWait.push(UserService.getUserById(this.userId).then(response => {
+      this.userData = response.data
+    }))
+    pleaseWait.push(MatchService.getMessage(this.matchId).then(response => {
       this.messages = response.data
+    }))
+    pleaseWait.push(UserService.getAllUsers().then(response => {
+      this.allUsers = response.data
+    }))
+    Promise.all(pleaseWait).then(() => {
+      const getMatchedUserObjectId = this.matchData.profiles.find(id => id !== this.userData._id)
+      const matchedUserObject = this.allUsers.find(user => user._id === getMatchedUserObjectId)
+      this.matchedUser = matchedUserObject
     })
+    // const getMatchedUserGoogleId = this.allUsers.filter(this.allUsers.has(getMatchedUserObjectId))
+    // console.log(getMatchedUserGoogleId)
   },
   data() {
     return {
       matchData: [],
       messages: [],
+      userData: [],
+      allUsers: [],
+      matchedUser: [],
       message: ''
     }
+  },
+  computed: {
+    // yourMessages: function () {
+    //   return Object.values(this.user).filter(users => this.messages.includes(users._id))
+    // }
   },
   methods: {
     sendMessage() {
       Api.post('/matches/' + this.matchId + '/conversation', {
-        sender: this.userId,
+        sender: this.userId.toString(),
         content: this.message
       })
+      console.log(this.userId)
+      console.log(this.message)
     }
   }
 }
@@ -183,7 +211,36 @@ font-size: 18px;
 font-weight: 700;
 width: 100px;
 }
-/*Idk what these last ones do but they probably will be the chat bubbles */
+.message {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: lightskyblue;
+  border-radius: 16px;
+  color: #333;
+  font-size: 80%;
+  line-height: 1.2em;
+  text-align: left;
+  margin-left: 160px;
+}
+.match-message {
+  background-color: lightgreen;
+  margin-right: 160px;
+  margin-left: 0;
+}
+.timestamp {
+  position: absolute;
+  text-align: right;
+  right: 5px;
+  bottom: 2px;
+  font-size: 80%;
+  font-weight: bold;
+  line-height: 1.2em;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #333;
+}
+/* Idk what these last ones do but they probably will be the chat bubbles */
 /*.message {
 display: flex;
 margin-bottom: 15px;

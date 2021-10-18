@@ -33,7 +33,8 @@ import { Api } from '@/Api'
 export default {
   name: 'edit-profile-item',
   props: {
-    userID: Number
+    userID: String,
+    matchID: String
   },
   data() {
     return {
