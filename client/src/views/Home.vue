@@ -25,7 +25,6 @@
 
 <script>
 // @ is an alias to /src
-import { Api } from '@/Api'
 
 export default {
   name: 'home',
@@ -36,15 +35,6 @@ export default {
     }
   },
   methods: {
-    getMessage() {
-      Api.get('/')
-        .then(response => {
-          this.message = response.data.message
-        })
-        .catch(error => {
-          this.message = error
-        })
-    },
     mainmenu() {
       this.$router.push('/mainmenu').catch(error => {
         console.log(error)

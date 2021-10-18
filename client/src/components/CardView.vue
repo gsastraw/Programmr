@@ -60,6 +60,8 @@ export default {
     // currently just gets the user's recommended users at position 2 in the array
     UserService.getRecommendedUsers(this.userID).then(response => {
       this.users = response.data
+    }).catch(error => {
+      alert(error)
     })
   },
   methods: {

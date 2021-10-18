@@ -43,7 +43,7 @@ export default {
       })
       .catch(error => {
         this.matches = []
-        console.log(error)
+        alert(error)
         //   TODO: display some error message instead of logging to console
       })
       .then(() => {
@@ -61,6 +61,7 @@ export default {
       console.log(`Delete match with id ${id}`)
       Api.delete(`/matches/${id}`)
         .then(response => {
+          console.log(response.data)
           const index = this.matches.findIndex(match => match._id === id)
           this.matches.splice(index, 1)
         })

@@ -28,7 +28,10 @@ export default {
       if (r === true) {
         Api.delete('/users/' + this.userID)
           .then(response => {
+            alert(response)
             console.log('User deleted')
+          }).catch(error => {
+            alert(error)
           })
         window.location.href = '/'
       }

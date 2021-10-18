@@ -35,6 +35,7 @@ export default {
       .catch(error => {
         this.users = []
         console.log(error)
+        alert(error)
         //   TODO: display some error message instead of logging to console
       })
       .then(() => {

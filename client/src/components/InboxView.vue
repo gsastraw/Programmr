@@ -54,7 +54,11 @@ export default {
       const getMatchedUserObjectId = this.matchData.profiles.find(id => id !== this.userData._id)
       const matchedUserObject = this.allUsers.find(user => user._id === getMatchedUserObjectId)
       this.matchedUser = matchedUserObject
+    }).catch(error => {
+      console.log(error)
+      alert('Your request could not be parsed')
     })
+    this.scrollIntoView()
   },
   data() {
     return {
@@ -68,18 +72,28 @@ export default {
   },
   methods: {
     async sendMessage() {
-      await Api.post('/matches/' + this.matchId + '/conversation', {
-        sender: this.userId.toString(),
-        content: this.message
-      })
-      Api.get('/matches/' + this.matchId + '/conversation').then(response => {
-        this.messages = response.data
-      })
-      console.log(this.userId)
-      console.log(this.message)
-      window.location.reload()
-      const elmnt = document.getElementById('top')
-      elmnt.scrollIntoView(false)
+      try {
+        await Api.post('/matches/' + this.matchId + '/conversation', {
+          sender: this.userId.toString(),
+          content: this.message
+        }).catch(error => {
+          alert('Your request could not be sent at this time')
+          console.log(error.toString())
+        })
+        Api.get('/matches/' + this.matchId + '/conversation').then(response => {
+          this.messages = response.data
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    scrollToElement() {
+      const el = this.$refs.scrollToMe
+
+      if (el) {
+      // Use el.scrollIntoView() to instantly scroll to the element
+        el.scrollIntoView({ behavior: 'smooth' })
+      }
     }
   }
 }

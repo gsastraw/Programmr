@@ -3,8 +3,8 @@
     <b-img class="burger-menu" v-b-toggle.sidebar :src="require('../assets/burgermenu.svg')"></b-img>
     <b-sidebar class="sidebar" id="sidebar"
     width="240px"
-    right="true"
-    backdrop="true"
+    :right="true"
+    :backdrop="true"
     shadow="lg"
     bg-variant="dark">
     <b-img class="navbar-logo" v-b-toggle.sidebar :src="require('../assets/squarelogo.svg')"></b-img>

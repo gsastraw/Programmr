@@ -54,6 +54,7 @@ export default {
           })
           .catch(error => {
             this.users = []
+            alert('Your request could not be processed. Please try again.')
             console.log(error)
           })
       }
