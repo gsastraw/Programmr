@@ -3,7 +3,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4">
-      <b-avatar v-if="users.avatarUrl != null" v-bind:src="users.avatarUrl" class="picture"></b-avatar>
+      <b-avatar v-if="users.avatarUrl != null" v-bind="users.avatarUrl" class="picture"></b-avatar>
       <h1 class="name">{{ users.firstName }} {{ users.lastName }}</h1>
       <p class="DOB"> {{ users.dob }}</p>
       <p class="Location"> {{ users.location }}</p>
@@ -37,9 +37,6 @@ export default {
         console.log(error)
         alert(error)
         //   TODO: display some error message instead of logging to console
-      })
-      .then(() => {
-        console.log('This runs every time after success or error.')
       })
   },
   data() {

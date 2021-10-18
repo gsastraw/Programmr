@@ -12,15 +12,14 @@
   @draggedRight="swipeRight">
   <div class="card-container">
     <b-container class="img-container">
-      <b-img v-if="users[index].profile.avatarUrl != null" v-bind:src="users[index].profile.avatarUrl" class="profile-container"></b-img>
-      <b-img class="profile-container" v-else v-bind:src="'https://indol.se/wp-content/uploads/2017/04/profile-placeholder.png'"></b-img>
+      <b-img v-if='this.recommendedUsers[index].avatarUrl' v-bind="this.recommendedUsers[index].profile.avatarUrl" class="profile-container"></b-img>
     </b-container>
     <b-container class="text-container">
       <b-col class="name-text">
-        {{ users[index].profile.firstName }}
-        {{ users[index].profile.lastName }}
+        {{ this.recommendedUsers[index].profile.firstName }}
+        {{ this.recommendedUsers[index].profile.lastName }}
       </b-col>
-      <div class="bio-text">{{ users[index].profile.bio }}</div>
+      <div class="bio-text">{{ this.recommendedUsers[index].profile.bio }}</div>
     </b-container>
     </div>
   </Vue2InteractDraggable>
@@ -45,51 +44,59 @@ export default {
     return {
       isVisible: true,
       index: 0,
-      users: []
+      currentUser: [],
+      allUsers: [],
+      recommendedUsers: []
     }
   },
-  computed: {
-    current() {
-      return this.users[this.index]
-    },
-    next() {
-      return this.users[this.index + 1]
-    }
-  },
-  mounted() {
-    // currently just gets the user's recommended users at position 2 in the array
-    UserService.getRecommendedUsers(this.userID).then(response => {
-      this.users = response.data
+  created() {
+    const pleaseWait = []
+    pleaseWait.push(UserService.getAllUsers().then(response => {
+      this.allUsers = response.data
+    }))
+    pleaseWait.push(UserService.getUserById(this.userID).then(response => {
+      this.currentUser = response.data
     }).catch(error => {
       alert(error)
+    }))
+    Promise.all(pleaseWait).then(response => {
+      UserService.getRecommendedUsers(this.userID).then(response => {
+        this.recommendedUsers = response.data
+        console.log(this.currentUser)
+        const newArr = this.recommendedUsers.filter(user => user.id !== this.userID.toString() && !this.currentUser.matchInfo.accepted.includes(this.allUsers.find(u => u.googleId === user.id)._id) && !this.currentUser.matchInfo.rejected.includes(this.allUsers.find(u => u.googleId === user.id)._id))
+        this.recommendedUsers = newArr
+        console.table(newArr)
+      }).catch(error => {
+        alert(error)
+      })
     })
+    // currently just gets the user's recommended users at position 2 in the array
   },
   methods: {
     swipeRight() {
-      UserService.postSwipeStatus(this.userID, this.users[this.index].id, 'accept').then(response => {
+      UserService.postSwipeStatus(this.userID, this.recommendedUsers[this.index].id, 'accept').then(response => {
         console.log(response)
+      }).catch(error => {
+        alert(error)
       })
       // eslint-disable-next-line no-return-assign
       setTimeout(() => this.isVisible = false, 500)
       setTimeout(() => {
         this.index++
-        if (this.index >= this.users.length) {
-          this.index = 0
-        }
         this.isVisible = true
       }, 500)
     },
     swipeLeft() {
-      UserService.postSwipeStatus(this.userID, this.users[this.index].id, 'reject').then(response => {
+      UserService.postSwipeStatus(this.userID, this.recommendedUsers[this.index].id, 'reject').then(response => {
         console.log(response)
+      }).catch(error => {
+        alert(error)
       })
       // eslint-disable-next-line no-return-assign
       setTimeout(() => this.isVisible = false, 500)
       setTimeout(() => {
-        this.index--
-        if (this.index >= this.users.length) {
-          this.index = 0
-        }
+        this.index++
+        //
         this.isVisible = true
       }, 500)
     }
@@ -132,6 +139,7 @@ export default {
   border-radius: 10px;
   padding: 0px;
   background-color: rgba(114, 204, 255, 0.23);
+  touch-action: manipulation;
 }
 
 .profile-container {

@@ -2,7 +2,7 @@
 <div class="view chat">
 <header>
   <b-button to="/matches/" class="button" >Back</b-button>
-  <h1>{{ this.matchedUser.profile.firstName + ' ' + this.matchedUser.profile.lastName }}</h1>
+  <h1 v-if="this.matchedUser.profile">{{ this.matchedUser.profile.firstName + ' ' + this.matchedUser.profile.lastName }}</h1>
 </header>
 <section class="chat-box">
   <div v-for="message in messages" :key="message.content">
@@ -35,7 +35,17 @@ export default {
     matchId: String,
     userId: Number
   },
-  mounted() {
+  data() {
+    return {
+      matchData: [],
+      messages: [],
+      userData: [],
+      allUsers: [],
+      matchedUser: [],
+      message: ''
+    }
+  },
+  created() {
     const pleaseWait = []
     pleaseWait.push(MatchService.getMatch(this.matchId).then(response => {
       console.log(response)
@@ -58,17 +68,6 @@ export default {
       console.log(error)
       alert('Your request could not be parsed')
     })
-    this.scrollIntoView()
-  },
-  data() {
-    return {
-      matchData: [],
-      messages: [],
-      userData: [],
-      allUsers: [],
-      matchedUser: [],
-      message: ''
-    }
   },
   methods: {
     async sendMessage() {
@@ -85,14 +84,6 @@ export default {
         })
       } catch (error) {
         console.log(error)
-      }
-    },
-    scrollToElement() {
-      const el = this.$refs.scrollToMe
-
-      if (el) {
-      // Use el.scrollIntoView() to instantly scroll to the element
-        el.scrollIntoView({ behavior: 'smooth' })
       }
     }
   }
