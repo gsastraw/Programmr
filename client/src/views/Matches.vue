@@ -8,7 +8,10 @@
         <b-card class="header" no-body header="List of matches:">
       <b-list-group class="list-group-mine">
         <b-list-group-item button v-for="match in matches" v-bind:key="match.googleId">
-          <match-item v-bind:match="match" v-on:del-match="deleteMatch"/>
+          <router-link :to="{ name: 'inbox', params: { matchId: match._id }}">
+          <match-item v-bind:match="match" v-on:del-match="deleteMatch">
+          </match-item>
+          </router-link>
         </b-list-group-item>
       </b-list-group>
       </b-card>
