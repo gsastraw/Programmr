@@ -149,6 +149,24 @@ const getMatchForUser = async (userId, matchId) => {
     }
 }
 
+const deleteMatchForUser = async (userId, matchId) => {
+    if (!userId) {
+        return Promise.reject(new HttpError('UserId not defined', 400))
+    }
+
+    if (!matchId) {
+        return Promise.reject(new HttpError('MatchId not defined', 400))
+    }
+
+    try {
+        const match = await getMatchForUser(userId, matchId);
+
+        return Match.deleteOne({ _id: match._id }).exec();
+    } catch(error) {
+        return Promise.reject(error);
+    }
+}
+
 const getMatchMessages = async (id) => {
     if (!id) {
         return Promise.reject(new HttpError("Id not defined", 400));
@@ -195,6 +213,7 @@ const MatchService = {
     getMatchesForUser,
     deleteMatchesForUser,
     getMatchForUser,
+    deleteMatchForUser,
     getMatchMessages,
     createMatchMessage
 }
