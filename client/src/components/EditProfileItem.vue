@@ -4,7 +4,7 @@
     <form v-on:submit.prevent="updateProfile">
       <div class="row">
         <div class="col-md-4">
-          <b-avatar v-bind:src=avatarUrl class="picture"></b-avatar>
+          <b-avatar class="picture"></b-avatar>
           <div class="form-group">
             <label name="first-Name">First Name</label>
             <input type="text" class="form-control" v-model="firstName" id="InputFirstName">
@@ -40,7 +40,8 @@ export default {
     return {
       text: '',
       firstName: '',
-      lastName: ''
+      lastName: '',
+      bio: ''
     }
   },
   methods: {
