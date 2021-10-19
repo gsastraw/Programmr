@@ -167,6 +167,7 @@ export default {
   display: flex;
   position: relative;
   max-width: 100%;
+  width: 75vw;
   height: 35vh;
   /* border-radius: 10px; */
   background-color: rgba(114, 204, 255, 0.23);
