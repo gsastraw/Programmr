@@ -5,7 +5,7 @@
     <div class="col-md-4">
       <b-avatar v-if="users.avatarUrl" v-bind:src="users.avatarUrl.toString()" class="picture"></b-avatar>
       <h1 class="name">{{ users.firstName }} {{ users.lastName }}</h1>
-      <p class="DOB"> {{ users.dob }}</p>
+      <p class="DOB"> {{ new Date(users.dob).toLocaleString('se', {month: "long", day: "numeric", year: "numeric"}) }}</p>
       <p class="Location"> {{ users.location }}</p>
     </div>
     <div class="col-md-8" id="about-me">
