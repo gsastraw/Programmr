@@ -6,8 +6,40 @@
         <h1 class="tagline-text">A dating app for programmers. By programmers.</h1>
         <h2 class="description-text">Programmr is a dating app that matches you with other potential programmers.</h2>
       <div class="login-button-container">
-        <b-button to="/mainmenu" class="login-button" variant="dark">Login</b-button>
+        <b-button v-b-modal.modal-scrollable class="login-button" variant="dark">Login</b-button>
+        <b-modal id="modal-scrollable" scrollable title="Choose a user to log in">
+          <b-list-group>
+            <router-link :to="{ name: 'mainmenu'}">
+          <b-list-group-item button v-for="user in users" v-bind:key="user.googleId">
+            {{user.googleId}}
+          </b-list-group-item>
+          </router-link>
+          </b-list-group>
+        </b-modal>
       </div>
+      <div>
+
+    <b-button v-b-modal.modal-prevent-closing class="login-button" variant="dark">Create an account</b-button>
+    <b-modal id="modal-prevent-closing" ref="modal" title="Create an account">
+      <form v-on:submit.prevent="createUser">
+        <div class="form-group">
+            <label name="first-Name">First Name</label>
+            <input type="text" class="form-control" v-model="firstName" id="InputFirstName">
+          </div>
+          <div class="form-group">
+            <label name="last-Name">Last Name</label>
+            <input type="text" class="form-control" v-model="lastName" id="InputLastName">
+          </div>
+          <div class="form-group">
+            <label name="dob">Birthday </label>
+            <b-calendar v-model="dob" locale="en-US" id="InputDob"></b-calendar>
+          </div>
+          <div class="form-group">
+          <button class="btn btn-primary" id="create-button">Ok</button>
+        </div>
+      </form>
+    </b-modal>
+  </div>
     </div>
 
   <div class="right-side">
@@ -25,20 +57,56 @@
 
 <script>
 // @ is an alias to /src
-
+import { Api } from '@/Api'
+import UserService from '../services/UserService'
 export default {
   name: 'home',
   components: {
   },
   data() {
     return {
+      firstName: '',
+      lastName: '',
+      dob: '',
+      users: [],
+      context: null
     }
+  },
+  created() {
+    UserService.getAllUsers().then(response => {
+      this.users = response.data
+    }).catch(error => {
+      alert('No users found')
+      console.log(error)
+    })
   },
   methods: {
     mainmenu() {
       this.$router.push('/mainmenu').catch(error => {
         console.log(error)
       })
+    },
+    createUser() {
+      const userID = Math.floor(Math.random() * 1000) + 1
+      Api.post('/users', { id: userID.toString() })
+        .then(response => {
+          console.log(response)
+          Api.post('/users/' + userID.toString() + '/profile', { firstName: this.firstName, lastName: this.lastName, dob: this.dob })
+            .then(response => {
+              console.log(response)
+              window.location.href = '/'
+            })
+            .catch(error => {
+              alert('Profile could not be created')
+              console.log(error)
+            })
+        })
+        .catch(error => {
+          alert('Your request could not be processed. Please try again.')
+          console.log(error)
+        })
+    },
+    handleLogin() {
     }
   }
 }
