@@ -79,8 +79,41 @@ p {
 #about-me {
   padding-top: 100px;
 }
+
 #biotextarea {
-    height: 85%;
+    height: 63%;
+    background-color: rgba(114,204,255,0.3);
+    border-color: rgba(114,204,255,0.3);
+    color: white;
+}
+#avatarUrl {
+    background-color: rgba(114,204,255,0.3);
+    border-color: rgba(114,204,255,0.3);
+    color: white;
+}
+.picture {
+    margin-top: 20px;
+    height: 250px;
+    width: 250px;
+}
+}
+@media screen and (max-width: 768px) {
+#biotextarea {
+    height: 30%;
+    background-color: rgba(114,204,255,0.3);
+    border-color: rgba(114,204,255,0.3);
+    color: white;
+}
+#avatarUrl {
+  margin-top: 5px;
+    background-color: rgba(114,204,255,0.3);
+    border-color: rgba(114,204,255,0.3);
+    color: white;
+}
+.picture {
+    margin-top: 20px;
+    height: 150px;
+    width: 150px;
 }
 }
 #name-input {
@@ -98,12 +131,6 @@ p {
     border-color: rgba(114,204,255,0.3);
     color: white;
 }
-#biotextarea {
-    height: 65%;
-    background-color: rgba(114,204,255,0.3);
-    border-color: rgba(114,204,255,0.3);
-    color: white;
-}
 #update-button {
     margin-top: 10px;
     background: #7e69ff;
@@ -116,11 +143,6 @@ p {
 }
 .user-container {
   padding-top: 80px;
-}
-.picture {
-    margin-top: 20px;
-    height: 250px;
-    width: 250px;
 }
 h1 {
   color: #72CCFF;
