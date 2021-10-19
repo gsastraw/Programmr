@@ -109,6 +109,34 @@ router.delete('/:userId', (req, res) => {
         });
 });
 
+router.patch('/:userId', (req, res) => {
+    const {error, _} = UserCommands.updateUser.validate(req.body);    
+
+    if (error) {
+        return res.status(400).send({
+            message: formatValidationError(error)
+        });
+    }
+
+    const { id } = req.body;
+
+    UserService.updateUser(req.params.userId, id)
+        .then(_ => {
+            return res.sendStatus(200);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
+                message: error
+            });
+        })
+})
+
 router.post('/:userId/profile', (req, res) => {
     const {error, _} = UserCommands.createUserProfile.validate(req.body);    
 

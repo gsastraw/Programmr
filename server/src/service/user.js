@@ -81,6 +81,20 @@ const deleteUser = async (id) => {
     }
 }
 
+const updateUser = async (id, newId) => {
+    try {
+        const user = await getUser(id);
+
+        if (id !== newId && await getUser(newId)) {
+            return Promise.reject(new HttpError(`User with id '${newId}' already exists`, 400))
+        }
+
+        return User.updateOne({ _id: user._id }, { googleId: newId }).exec();
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
 const getUserProfile = async (id) => {
     try {
         const user = await getUser(id);
@@ -202,6 +216,7 @@ const UserService = {
     getUser,
     createUser,
     deleteUser,
+    updateUser,
     getUserProfile,
     createUserProfile,
     updateUserProfile,
