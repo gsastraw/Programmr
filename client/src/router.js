@@ -20,6 +20,7 @@ const router = new Router({
     },
     {
       path: '/mainmenu',
+      name: 'mainmenu',
       component: MainMenu
     },
     {

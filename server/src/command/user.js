@@ -20,7 +20,7 @@ const createUserProfile = Joi.object({
     location: Joi.object({
         long: Joi.number().required(), 
         lat: Joi.number().required()
-    }).required(),
+    }),
     bio: Joi.string(),
     avatarUrl: Joi.string().uri({
         scheme: [
