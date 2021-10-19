@@ -65,9 +65,9 @@ The purpose of this dating app is to link fellow SEM programmers together. A use
 
 ### Pages
 
-* Login: With the limited time, we decided to have a system where you choose which user you want to sign into by their username and id. In the future a proper authentication system is ideal.
-* Registration: Allows the user to create an account a name and birthday, a user id is generated automatically upon creation.
-* Profile Page: Allows the user to view and update their profile information, containing a biography as well as a profile picture. There is also an ability to delete the account that is currently logged in, update the information and overwriting the profile. 
+* Login: With the limited time, we decided to have a system where you choose which user you want to sign in to by their username and id. In the future a proper authentication system is the plan as it's ideal.
+* Registration: Allows the user to create an account by inputting a name and birthday, the user id is generated automatically upon creation.
+* Profile Page: Allows the user to view and update their profile information, containing a biography as well as a profile picture. There is also an ability to delete the account that is currently logged in to, update the information and overwriting the profile. 
 * Home: Allows the user to look for matches. The matches are displayed as cards with information such as their profile picture, name and their biography.
 * Matched With: Allows the user to look at their matches and message them. In the same window, the user can click on a match and begin chatting with them.
 * Chat: Allows the user to communicate with the match they have chosen in the "Matches" page. 
