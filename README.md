@@ -61,16 +61,16 @@ Open the `server` and `client` in separate VSCode workspaces or open the combine
 
 ### Purpose
 
-The purpose of this dating app is to link fellow SEM programmers together. A user can match or unmatch with another user, showcase interests, and communicate with others through a chat system. A user can only match with another user, but not with groups of users.
+The purpose of this dating app is to link fellow SEM programmers together. A user can match or unmatch with another user, and communicate with others through a chat system. A user can only match with another user, but not with groups of users.
 
 ### Pages
 
-* Login: A login form requiring a correct email and password. 
-* Registration: Allows the user to create an account with an email, password, first name, and last name.
-* Profile Page: Allows the user to view and update their profile information, containing a biography, profile picture, location, as well as interests. There is also an ability to update the location range that the search algorithm looks at for matches. There is also an ability to delete the account that is currently logged in. 
-* Home: Allows the user to look for matches. The matches are displayed as cards with information such as their profile picture, distance from their current location, their location, and their interests.
+* Login: With the limited time, we decided to have a system where you choose which user you want to sign into by their username and id. In the future a proper authentication system is ideal.
+* Registration: Allows the user to create an account a name and birthday, a user id is generated automatically upon creation.
+* Profile Page: Allows the user to view and update their profile information, containing a biography as well as a profile picture. There is also an ability to delete the account that is currently logged in, update the information and overwriting the profile. 
+* Home: Allows the user to look for matches. The matches are displayed as cards with information such as their profile picture, name and their biography.
 * Matched With: Allows the user to look at their matches and message them. In the same window, the user can click on a match and begin chatting with them.
-* Chat: Allows the user to communicate with the match they have chosen in the "Matched With" page. 
+* Chat: Allows the user to communicate with the match they have chosen in the "Matches" page. 
 
 ### Entity-Relationship (ER) Diagram
 
