@@ -59,7 +59,7 @@ app.use((err, req, res, next) => {
 /**
  * Used to check if the server is online before running tests
  */
-app.head('/', (req, res) => {
+app.head('/api', (req, res) => {
     res.sendStatus(200)
 })
 

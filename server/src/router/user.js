@@ -372,6 +372,6 @@ const formatValidationError = (error) => {
 }
 
 module.exports = {
-    base: '/users',
+    base: '/api/users',
     handler: router
 };

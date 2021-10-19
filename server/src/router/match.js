@@ -198,6 +198,6 @@ const formatValidationError = (error) => {
 }
 
 module.exports = {
-    base: "/matches",
+    base: "/api/matches",
     handler: router
 };

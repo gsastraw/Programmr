@@ -2267,7 +2267,7 @@
 	"variable": [
 		{
 			"key": "host",
-			"value": "http://localhost:3000"
+			"value": "http://localhost:3000/api"
 		},
 		{
 			"key": "matchId",

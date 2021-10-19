@@ -45,6 +45,6 @@ router.get('/logout', (req, res) => {
 });
 
 module.exports = {
-    base: "/auth",
+    base: "/api/auth",
     handler: router
 };
