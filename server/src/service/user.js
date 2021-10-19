@@ -103,7 +103,7 @@ const createUserProfile = async (id, details) => {
             return Promise.reject(new HttpError(`Profile for user with id '${id}' already exists`, 400));
         }
 
-        const command = _.pick(details, 'firstName', 'lastName', 'dob', 'location', 'bio', 'avatarUrl');
+        const command = _.pick(details, 'firstName', 'lastName', 'dob', 'bio', 'avatarUrl');
 
         return User.updateOne({ googleId: id }, {profile: command}).exec();
     } catch (error) {
@@ -119,7 +119,7 @@ const updateUserProfile = async (id, details) => {
             return Promise.reject(new HttpError(`Profile for user with id '${id}' not found`, 404));
         }
 
-        const command = _.pick(details, 'firstName', 'lastName', 'dob', 'location', 'bio', 'avatarUrl');
+        const command = _.pick(details, 'firstName', 'lastName', 'dob', 'bio', 'avatarUrl');
 
         const update = buildProfileUpdateParamters(command);
 

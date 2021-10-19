@@ -14,16 +14,6 @@ const userProfileSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    location: {
-        long: {
-            type: Number,
-            required: true
-        },
-        lat: {
-            type: Number,
-            required: true
-        }
-    },
     bio: String,
     avatarUrl: [String]
 });
