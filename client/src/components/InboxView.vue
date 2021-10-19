@@ -6,10 +6,10 @@
 </header>
 <section class="chat-box">
   <div v-for="message in messages" :key="message.content">
-  <div class="message" v-if="message.sender == matchedUser._id">
+    <div class="message" v-on:click="alertNow('Input the message you want to update: ')" v-if="message.sender == matchedUser._id">
   {{ message.content }}  <span class="timestamp">{{ new Date(message.createdAt).toLocaleString('se') }}</span>
   </div>
-  <div class="message match-message" v-else>{{ message.content }} <span class="timestamp">{{ new Date(message.createdAt).toLocaleString('se') }}</span></div>
+  <div class="message match-message" v-on:click="alertNow('Input the message you want to update: ')" v-else>{{ message.content }} <span class="timestamp">{{ new Date(message.createdAt).toLocaleString('se') }}</span></div>
   </div>
 </section>
 <footer>
@@ -66,7 +66,7 @@ export default {
       this.matchedUser = matchedUserObject
     }).catch(error => {
       console.log(error)
-      alert('Your request could not be parsed')
+      alert(error)
     })
   },
   methods: {
@@ -76,7 +76,7 @@ export default {
           sender: this.userId.toString(),
           content: this.message
         }).catch(error => {
-          alert('Your request could not be sent at this time')
+          alert(error)
           console.log(error.toString())
         })
         Api.get('/matches/' + this.matchId + '/conversation').then(response => {
@@ -85,6 +85,9 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    alertNow(message) {
+      prompt(message)
     }
   }
 }
@@ -420,4 +423,5 @@ line-height: 1.2em;
 text-align: left;
 }
 }
+
 </style>
