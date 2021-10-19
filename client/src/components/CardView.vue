@@ -12,7 +12,7 @@
   @draggedRight="swipeRight">
   <div class="card-container">
     <b-container class="img-container">
-      <b-img v-if='this.recommendedUsers[index].profile.avatarUrl' :v-bind="this.recommendedUsers[index].profile.avatarUrl" class="profile-container"></b-img>
+      <b-img v-bind:src="this.recommendedUsers[index].profile.avatarUrl.toString()" class="profile-container"></b-img>
     </b-container>
     <b-container class="text-container">
       <b-col class="name-text">
