@@ -18,8 +18,8 @@
       </div>
       <div>
 
-    <b-button v-b-modal.modal-prevent-closing class="login-button" variant="dark">Create an account</b-button>
-    <b-modal id="modal-prevent-closing" ref="modal" title="Create an account" hide-footer>
+    <b-button v-b-modal.modal-prevent-closing class="login-button" variant="dark">Register</b-button>
+    <b-modal id="modal-prevent-closing" ref="modal" title="Register" hide-footer>
       <form v-on:submit.prevent="createUser">
         <div class="form-group">
             <label name="first-Name">First Name</label>
@@ -173,7 +173,7 @@ p {
   background-color: rgb(51, 50, 50);
   width: 10vw;
   height: auto;
-  margin-top: 50px;
+  margin-top: 10px;
 }
 /* .programmr-text {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
