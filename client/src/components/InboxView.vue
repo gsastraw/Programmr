@@ -6,10 +6,10 @@
 </header>
 <section class="chat-box">
   <div v-for="(message, index) in messages" :key="index">
-    <div class="message" v-on:click="alertNow('Input the message you want to update: ')" v-if="message.sender == matchedUser._id">
+    <div class="message" v-if="message.sender == matchedUser._id">
   {{ message.content }}  <span class="timestamp">{{ new Date(message.createdAt).toLocaleString('se') }}</span>
   </div>
-  <div class="message match-message" v-on:click="alertNow('Input the message you want to update: ')" v-else>{{ message.content }} <span class="timestamp">{{ new Date(message.createdAt).toLocaleString('se') }}</span></div>
+  <div class="message match-message" v-else>{{ message.content }} <span class="timestamp">{{ new Date(message.createdAt).toLocaleString('se') }}</span></div>
   </div>
 </section>
 <footer>
@@ -83,9 +83,6 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    },
-    alertNow(message) {
-      prompt(message)
     }
   }
 }
@@ -399,8 +396,8 @@ width: 100px;
   text-align: right;
   right: 5px;
   bottom: 2px;
-  font-size: 80%;
-  font-weight: bold;
+  font-size: 69%;
+  font-weight: light;
   line-height: 1.2em;
   display: inline-block;
   padding: 10px 20px 0px;
