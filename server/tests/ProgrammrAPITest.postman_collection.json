@@ -472,11 +472,6 @@
 									"    pm.expect(jsonData.firstName).to.eql('Test');\r",
 									"    pm.expect(jsonData.lastName).to.eql('User');\r",
 									"    pm.expect(jsonData.bio).to.eql('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');\r",
-									"\r",
-									"    const location = jsonData.location;\r",
-									"    pm.expect(location).to.not.eql(undefined);\r",
-									"    pm.expect(location.long).to.eql(0);\r",
-									"    pm.expect(location.lat).to.eql(0);\r",
 									"});"
 								],
 								"type": "text/javascript"
