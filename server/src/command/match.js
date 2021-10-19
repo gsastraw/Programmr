@@ -8,6 +8,14 @@ const createMatch = Joi.object({
             .required()
 });
 
+const replaceMatch = Joi.object({
+    users: Joi.array()
+        .min(2)
+        .max(2)
+        .items(Joi.string().alphanum().required())
+        .required()
+})
+
 const createMatchMessage = Joi.object({
     sender: Joi.string()
         .alphanum()
@@ -19,5 +27,6 @@ const createMatchMessage = Joi.object({
 
 module.exports = {
     createMatch,
+    replaceMatch,
     createMatchMessage
 }

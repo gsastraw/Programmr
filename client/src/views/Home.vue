@@ -6,11 +6,11 @@
         <h2 class="description-text">Programmr is a dating app that matches you with other potential programmers.</h2>
       <div class="login-button-container">
         <b-button v-b-modal.modal-scrollable class="login-button" variant="dark">Login</b-button>
-        <b-modal id="modal-scrollable" scrollable title="Choose a user to log in">
+        <b-modal id="modal-scrollable" scrollable title="Choose a user to log in" hide-footer>
           <b-list-group>
           <b-list-group-item button v-for="user in users" v-bind:key="user.googleId">
             <router-link :to="{ name: 'mainmenu', params: { userId: user.googleId }}">
-            {{user.profile }}
+            <p>Name: {{user.profile.firstName }} {{user.profile.lastName}} id: {{user.googleId}}</p>
             </router-link>
           </b-list-group-item>
           </b-list-group>
@@ -19,7 +19,7 @@
       <div>
 
     <b-button v-b-modal.modal-prevent-closing class="login-button" variant="dark">Create an account</b-button>
-    <b-modal id="modal-prevent-closing" ref="modal" title="Create an account">
+    <b-modal id="modal-prevent-closing" ref="modal" title="Create an account" hide-footer>
       <form v-on:submit.prevent="createUser">
         <div class="form-group">
             <label name="first-Name">First Name</label>
@@ -117,6 +117,13 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@900&display=swap');
 @import url("../assets/style.css");
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap');
+.list-group-item:hover{
+  background-color: #a2b1c9;
+  font-style: normal;
+}
+p {
+  color: black;
+}
 .footer {
   display: flex;
   align-content: flex-start;

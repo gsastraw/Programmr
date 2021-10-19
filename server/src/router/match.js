@@ -109,6 +109,34 @@ router.delete('/:matchId', (req, res) => {
         })
 });
 
+router.put('/:matchId', (req, res) => {
+    const {error, _} = MatchCommands.replaceMatch.validate(req.body);    
+    
+    if (error) {
+        return res.status(400).send({
+            message: formatValidationError(error)
+        })
+    }
+
+    const {users} = req.body;
+
+    MatchService.replaceMatch(req.params.matchId, users)
+        .then(_ => {
+            return res.sendStatus(200);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
+                message: error
+            });
+        })
+})
+
 router.get('/:matchId/conversation', (req, res) => {
     MatchService.getMatchMessages(req.params.matchId)
         .then(messages => {

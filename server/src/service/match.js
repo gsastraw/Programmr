@@ -78,6 +78,25 @@ const deleteMatch = async (id) => {
     }
 }
 
+const replaceMatch = async (id, users) => {
+    try {
+        await getMatch(id);
+
+        const user1 = await UserService.getUser(users[0]);
+        const user2 = await UserService.getUser(users[1]);
+
+        const newMatchExists = await Match.exists({ profiles: { $all: [user1._id, user2._id] } });
+
+        if (newMatchExists) {
+            return Promise.reject(new HttpError(`Match for users with id '${users[0]}' and '${users[1]}' already exists`, 400));
+        }
+
+        return Match.updateOne({ _id: id }, { profiles: [user1._id, user2._id], messages: [] }).exec();
+    } catch (error) {
+        return Promise.reject(new HttpError(`Match with id '${id}' not found`, 404));
+    }
+}
+
 const getMatchesForUser = async (userId, page = DEFAULT_PAGE, pageSize = DEFAULT_PAGE_SIZE) => {
     if (!userId) {
         return Promise.reject(new HttpError('UserId not defined', 400))
@@ -210,6 +229,7 @@ const MatchService = {
     getMatch,
     createMatch,
     deleteMatch,
+    replaceMatch,
     getMatchesForUser,
     deleteMatchesForUser,
     getMatchForUser,
