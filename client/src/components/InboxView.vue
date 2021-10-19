@@ -5,7 +5,7 @@
   <h1 v-if="this.matchedUser.profile">{{ this.matchedUser.profile.firstName + ' ' + this.matchedUser.profile.lastName }}</h1>
 </header>
 <section class="chat-box">
-  <div v-for="message in messages" v-bind:key="message.content">
+  <div v-for="(message, index) in messages" :key="index">
     <div class="message" v-on:click="alertNow('Input the message you want to update: ')" v-if="message.sender == matchedUser._id">
   {{ message.content }}  <span class="timestamp">{{ new Date(message.createdAt).toLocaleString('se') }}</span>
   </div>
