@@ -17,6 +17,10 @@
         <div class="col-md-8" id="about-me">
           <h3 class="BIO">About me</h3>
           <textarea v-model="bio" class="form-control" id="biotextarea"></textarea>
+           <div class="form-group">
+            <label name="avatar-Url">Input avatar URL</label>
+            <input type="text" class="form-control" v-model="avatarUrl" id="avatarUrl">
+          </div>
         </div>
       </div>
         <div class="form-group">
@@ -41,14 +45,15 @@ export default {
       text: '',
       firstName: '',
       lastName: '',
-      bio: ''
+      bio: '',
+      avatarUrl: ''
     }
   },
   methods: {
     updateProfile() {
       const r = confirm('Do you want to save these changes?')
       if (r === true) {
-        Api.patch('/users/' + this.userID + '/profile', { firstName: this.firstName, lastName: this.lastName, bio: this.bio })
+        Api.patch('/users/' + this.userID + '/profile', { firstName: this.firstName, lastName: this.lastName, bio: this.bio, avatarUrl: this.avatarUrl })
           .then(response => {
             console.log(response)
             window.location.href = '/profile'
