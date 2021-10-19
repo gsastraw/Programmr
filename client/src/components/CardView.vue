@@ -72,6 +72,8 @@ export default {
       }).catch(error => {
         alert(error)
       })
+    }).catch(error => {
+      console.log(error)
     })
     // currently just gets the user's recommended users at position 2 in the array
   },
