@@ -23,10 +23,6 @@ const createUserProfile = Joi.object({
         .required(),
     dob: Joi.date()
         .required(),
-    location: Joi.object({
-        long: Joi.number().required(), 
-        lat: Joi.number().required()
-    }),
     bio: Joi.string(),
     avatarUrl: Joi.string().uri({
         scheme: [
@@ -44,10 +40,6 @@ const updateUserProfile = Joi.object({
         .alphanum()
         .min(1),
     dob: Joi.date(),
-    location: Joi.object({
-        long: Joi.number().required(), 
-        lat: Joi.number().required()
-    }),
     bio: Joi.string(),
     avatarUrl: Joi.string().uri({
         scheme: [
