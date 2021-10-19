@@ -6,6 +6,12 @@ const createUser = Joi.object({
         .required()
 });
 
+const updateUser = Joi.object({
+    id: Joi.string()
+        .alphanum()
+        .required()
+});
+
 const createUserProfile = Joi.object({
     firstName: Joi.string()
         .alphanum()
@@ -68,6 +74,7 @@ const matchDecisionCommand = Joi.object({
 
 module.exports = {
     createUser,
+    updateUser,
     createUserProfile,
     updateUserProfile,
     createUserMatch,
