@@ -2,7 +2,7 @@
 <div class="background">
     <Sidebar/>
       <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
-    <InboxView :userId=1 :matchId=this.$route.params.matchId>
+    <InboxView :userId=Number(this.$route.params.userId) :matchId=this.$route.params.matchId>
     </InboxView>
   </div>
 </template>

@@ -37,8 +37,7 @@ import { Api } from '@/Api'
 export default {
   name: 'edit-profile-item',
   props: {
-    userID: Number,
-    matchID: String
+    userId: Number
   },
   data() {
     return {
@@ -53,10 +52,10 @@ export default {
     updateProfile() {
       const r = confirm('Do you want to save these changes?')
       if (r === true) {
-        Api.patch('/users/' + this.userID + '/profile', { firstName: this.firstName, lastName: this.lastName, bio: this.bio, avatarUrl: this.avatarUrl })
+        Api.patch('/users/' + this.$route.params.userId + '/profile', { firstName: this.firstName, lastName: this.lastName, bio: this.bio, avatarUrl: this.avatarUrl })
           .then(response => {
             console.log(response)
-            window.location.href = '/profile'
+            this.$router.push('/profile/' + this.$route.params.userId)
           })
           .catch(error => {
             this.users = []

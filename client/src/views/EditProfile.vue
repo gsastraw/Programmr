@@ -1,9 +1,9 @@
 <template>
   <div class="background">
     <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
-    <Sidebar/>
-    <edit-profile-item :userID=1 />
-    <b-button to="/profile/" class="button" squared>Back</b-button>
+    <Sidebar />
+    <edit-profile-item :userId=Number($route.params.id) />
+    <b-button :to="{ name: 'profile', params: { userId: this.$route.params.userId }}" class="button" squared>Back</b-button>
     <b-button class="button" id="delete-user" squared v-on:click="deleteUser()">Delete account</b-button>
 </div>
 </template>
@@ -16,7 +16,6 @@ import { Api } from '@/Api'
 export default {
   name: 'EditProfile',
   props: {
-    userID: Number
   },
   components: {
     'edit-profile-item': EditProfileItem,
@@ -26,7 +25,7 @@ export default {
     deleteUser() {
       const r = confirm('Are you sure you want to delete your account? This is irreversible.')
       if (r === true) {
-        Api.delete('/users/' + this.userID)
+        Api.delete('/users/' + this.$route.params.userId)
           .then(response => {
             console.log('User deleted')
           }).catch(error => {

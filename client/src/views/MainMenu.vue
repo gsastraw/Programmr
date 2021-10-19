@@ -1,9 +1,9 @@
 <template>
 <div class="background">
   <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
-  <Sidebar/>
+  <Sidebar />
   <div class="cardview-position">
-    <CardView :userID=1>
+    <CardView :userId=Number($route.params.userId)>
     </CardView>
     </div>
 </div>

@@ -8,17 +8,20 @@
     shadow="lg"
     bg-variant="dark">
     <b-img class="navbar-logo" v-b-toggle.sidebar :src="require('../assets/squarelogo.svg')"></b-img>
-      <b-link class="router-text" to="/mainmenu">mainMenu<span>( );</span></b-link>
-      <b-link class="router-text" to="/matches">matches<span>( );</span></b-link>
-      <b-link class="router-text" to="/profile">myProfile<span>( );</span></b-link>
-      <b-link class="router-text" to="/">logOut<span>( );</span></b-link>
+      <b-link class="router-text" :to="{ name: 'mainmenu', params: { userId: this.$route.params.userId }}">mainMenu<span>( );</span></b-link>
+      <b-link class="router-text" :to="{ name: 'matches', params: { userId: this.$route.params.userId }}">matches<span>( );</span></b-link>
+      <b-link class="router-text" :to="{ name: 'profile', params: { userId: this.$route.params.userId }}">myProfile<span>( );</span></b-link>
+      <b-link class="router-text" :to="'/'">logOut<span>( );</span></b-link>
     </b-sidebar>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Sidebar'
+  name: 'Sidebar',
+  props: {
+    // userId: Number
+  }
 }
 </script>
 

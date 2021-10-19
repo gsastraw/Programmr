@@ -1,5 +1,4 @@
 <template>
-
   <div class="background">
   <div class="body">
     <div class="left-side">
@@ -9,11 +8,11 @@
         <b-button v-b-modal.modal-scrollable class="login-button" variant="dark">Login</b-button>
         <b-modal id="modal-scrollable" scrollable title="Choose a user to log in">
           <b-list-group>
-            <router-link :to="{ name: 'mainmenu'}">
           <b-list-group-item button v-for="user in users" v-bind:key="user.googleId">
-            {{user.googleId}}
+            <router-link :to="{ name: 'mainmenu', params: { userId: user.googleId }}">
+            {{user.profile }}
+            </router-link>
           </b-list-group-item>
-          </router-link>
           </b-list-group>
         </b-modal>
       </div>
@@ -56,6 +55,7 @@
 </template>
 
 <script>
+// ROUTE MATHCING DONE HERE
 // @ is an alias to /src
 import { Api } from '@/Api'
 import UserService from '../services/UserService'

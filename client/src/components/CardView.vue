@@ -37,7 +37,7 @@ export default {
     Vue2InteractDraggable
   },
   props: {
-    userID: Number
+    userId: Number
   },
   data() {
     // TODO: Add REST route to push all potential users from location
@@ -54,16 +54,16 @@ export default {
     pleaseWait.push(UserService.getAllUsers().then(response => {
       this.allUsers = response.data
     }))
-    pleaseWait.push(UserService.getUserById(this.userID).then(response => {
+    pleaseWait.push(UserService.getUserById(this.userId).then(response => {
       this.currentUser = response.data
     }).catch(error => {
       alert(error)
     }))
     Promise.all(pleaseWait).then(response => {
-      UserService.getRecommendedUsers(this.userID).then(response => {
+      UserService.getRecommendedUsers(this.userId).then(response => {
         this.recommendedUsers = response.data
         console.log(this.currentUser)
-        const newArr = this.recommendedUsers.filter(user => user.id !== this.userID.toString() && !this.currentUser.matchInfo.accepted.includes(this.allUsers.find(u => u.googleId === user.id)._id) && !this.currentUser.matchInfo.rejected.includes(this.allUsers.find(u => u.googleId === user.id)._id))
+        const newArr = this.recommendedUsers.filter(user => user.id !== this.userId.toString() && !this.currentUser.matchInfo.accepted.includes(this.allUsers.find(u => u.googleId === user.id)._id) && !this.currentUser.matchInfo.rejected.includes(this.allUsers.find(u => u.googleId === user.id)._id))
         this.recommendedUsers = newArr
         if (this.recommendedUsers.length > 0) {
           this.isVisible = true
@@ -72,12 +72,14 @@ export default {
       }).catch(error => {
         alert(error)
       })
+    }).catch(error => {
+      console.log(error)
     })
     // currently just gets the user's recommended users at position 2 in the array
   },
   methods: {
     swipeRight() {
-      UserService.postSwipeStatus(this.userID, this.recommendedUsers[this.index].id, 'accept').then(response => {
+      UserService.postSwipeStatus(this.userId, this.recommendedUsers[this.index].id, 'accept').then(response => {
         console.log(response)
       }).catch(error => {
         alert(error)
@@ -94,7 +96,7 @@ export default {
       }, 500)
     },
     swipeLeft() {
-      UserService.postSwipeStatus(this.userID, this.recommendedUsers[this.index].id, 'reject').then(response => {
+      UserService.postSwipeStatus(this.userId, this.recommendedUsers[this.index].id, 'reject').then(response => {
         console.log(response)
       }).catch(error => {
         alert(error)

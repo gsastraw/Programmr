@@ -2,7 +2,7 @@
 <div>
     <div class="background">
     <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
-    <Sidebar/>
+    <Sidebar />
     <b-container fluid="md" class="myContainer">
       <b-card-group deck>
         <b-card class="header" no-body header="List of matches:">
@@ -36,7 +36,7 @@ export default {
 
   mounted() {
     console.log('PAGE is loaded!')
-    Api.get('/users/1/matches')
+    Api.get('/users/' + this.$route.params.userId + '/matches')
       .then(response => {
         console.log(response)
         this.matches = response.data
