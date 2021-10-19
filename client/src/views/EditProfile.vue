@@ -3,7 +3,7 @@
     <b-img class="logo" :src="require('../assets/squarelogo.svg')"></b-img>
     <Sidebar />
     <edit-profile-item :userId=Number($route.params.id) />
-    <b-button to="/profile/" class="button" squared>Back</b-button>
+    <b-button :to="{ name: 'profile', params: { userId: this.$route.params.userId }}" class="button" squared>Back</b-button>
     <b-button class="button" id="delete-user" squared v-on:click="deleteUser()">Delete account</b-button>
 </div>
 </template>
