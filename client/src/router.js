@@ -19,27 +19,31 @@ const router = new Router({
       component: Home
     },
     {
-      path: '/mainmenu',
+      path: '/mainmenu/:userId',
       name: 'mainmenu',
-      component: MainMenu
+      component: MainMenu,
+      props: true
     },
     {
-      path: '/profile',
+      path: '/profile/:userId',
       name: 'profile',
-      component: Profile
+      component: Profile,
+      props: true
     },
     {
-      path: '/matches',
-      name: 'matches',
-      component: Matches
-    },
-    {
-      path: '/profile/edit',
+      path: '/profile/edit/:userId',
       name: 'edit',
-      component: EditProfile
+      component: EditProfile,
+      props: true
     },
     {
-      path: '/matches/chat/:matchId',
+      path: '/matches/:userId',
+      name: 'matches',
+      component: Matches,
+      props: true
+    },
+    {
+      path: '/matches/chat/:userId/:matchId',
       name: 'inbox',
       component: Inbox,
       props: true

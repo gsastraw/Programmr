@@ -1,11 +1,11 @@
 <template>
 <div class="view chat">
 <header>
-  <b-button to="/matches/" class="button" >Back</b-button>
+  <b-button :to="{name: 'matches', params: { userId: this.userId }} " class="button" >Back</b-button>
   <h1 v-if="this.matchedUser.profile">{{ this.matchedUser.profile.firstName + ' ' + this.matchedUser.profile.lastName }}</h1>
 </header>
 <section class="chat-box">
-  <div v-for="message in messages" :key="message.content">
+  <div v-for="message in messages" v-bind:key="message.content">
     <div class="message" v-on:click="alertNow('Input the message you want to update: ')" v-if="message.sender == matchedUser._id">
   {{ message.content }}  <span class="timestamp">{{ new Date(message.createdAt).toLocaleString('se') }}</span>
   </div>
@@ -79,9 +79,7 @@ export default {
           alert(error)
           console.log(error.toString())
         })
-        Api.get('/matches/' + this.matchId + '/conversation').then(response => {
-          this.messages = response.data
-        })
+        this.$router.go()
       } catch (error) {
         console.log(error)
       }

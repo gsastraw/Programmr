@@ -23,11 +23,11 @@ import { Api } from '@/Api'
 export default {
   name: 'profile-item',
   props: {
-    userID: Number
+    userId: Number
   },
   mounted() {
     console.log('PAGE is loaded!')
-    Api.get('/users/' + this.userID + '/profile')
+    Api.get('/users/' + this.userId + '/profile')
       .then(response => {
         console.log(response)
         this.users = response.data
