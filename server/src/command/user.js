@@ -49,6 +49,25 @@ const updateUserProfile = Joi.object({
     })
 });
 
+const replaceUserProfile = Joi.object({
+    firstName: Joi.string()
+        .alphanum()
+        .min(1)
+        .required(),
+    lastName: Joi.string()
+        .alphanum()
+        .min(1)
+        .required(),
+    dob: Joi.date().required(),
+    bio: Joi.string(),
+    avatarUrl: Joi.string().uri({
+        scheme: [
+            'http',
+            'https'
+        ]
+    })
+});
+
 const createUserMatch = Joi.object({
     id: Joi.string()
         .alphanum()
@@ -69,6 +88,7 @@ module.exports = {
     updateUser,
     createUserProfile,
     updateUserProfile,
+    replaceUserProfile,
     createUserMatch,
     matchDecisionCommand
 }

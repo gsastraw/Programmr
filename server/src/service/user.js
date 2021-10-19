@@ -143,6 +143,22 @@ const updateUserProfile = async (id, details) => {
     }
 };
 
+const replaceUserProfile = async (id, details) => {
+    try {
+        const user = await getUser(id);
+
+        if (!user.profile) {
+            return Promise.reject(new HttpError(`Profile for user with id '${id}' not found`, 404));
+        }
+
+        const command = _.pick(details, 'firstName', 'lastName', 'dob', 'bio', 'avatarUrl');
+
+        return User.updateOne({ googleId: id }, { profile: command }).exec();
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
 const buildProfileUpdateParamters = (command) => {
     const update = {};
 
@@ -220,6 +236,7 @@ const UserService = {
     getUserProfile,
     createUserProfile,
     updateUserProfile,
+    replaceUserProfile,
     addMatchDecision,
     getSuggestionsForUser
 };

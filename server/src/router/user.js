@@ -207,6 +207,32 @@ router.patch('/:userId/profile', (req, res) => {
         });
 });
 
+router.put('/:userId/profile', (req, res) => {
+    const {error, _} = UserCommands.replaceUserProfile.validate(req.body);    
+
+    if (error) {
+        return res.status(400).send({
+            message: formatValidationError(error)
+        });
+    }
+
+    UserService.replaceUserProfile(req.params.userId, req.body)
+        .then(_ => {
+            return res.sendStatus(200);
+        })
+        .catch(error => {
+            if (error instanceof HttpError) {
+                return res.status(error.statusCode).send({
+                    message: error.message
+                });
+            }
+
+            return res.status(500).send({
+                message: error
+            });
+        });
+});
+
 router.post('/:userId/matches', (req, res) => {
     const {error, _} = UserCommands.createUserMatch.validate(req.body);    
 
