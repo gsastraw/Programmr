@@ -79,7 +79,9 @@ export default {
           alert(error)
           console.log(error.toString())
         })
-        this.$router.go()
+        MatchService.getMessage(this.matchId).then(response => {
+          this.messages = response.data
+        })
       } catch (error) {
         console.log(error)
       }

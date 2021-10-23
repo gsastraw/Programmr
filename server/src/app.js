@@ -11,7 +11,7 @@ const router = require('./router');
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/programmr';
 const port = process.env.PORT || 3000;
 
-const root = path.normalize(__dirname + '/..');
+const root = path.normalize(__dirname + '/../..');
 const client = path.join(root, 'client', 'dist');
 
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
@@ -34,9 +34,6 @@ app.options('*', cors());
 app.use(cors());
 
 app.use(express.static(client));
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 const env = app.get('env');
 
@@ -63,7 +60,6 @@ app.head('/api', (req, res) => {
     res.sendStatus(200)
 })
 
-app.use(router.Auth.base, router.Auth.handler);
 app.use(router.User.base, router.User.handler);
 app.use(router.Match.base, router.Match.handler);
 
