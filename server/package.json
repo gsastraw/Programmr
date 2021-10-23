@@ -32,9 +32,7 @@
     "lodash": "^4.17.21",
     "mongoose": "^5.13.8",
     "mongoose-findorcreate": "^3.0.0",
-    "morgan": "^1.10.0",
-    "passport": "^0.4.1",
-    "passport-google-oauth20": "^2.0.0"
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
