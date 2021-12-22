@@ -4,7 +4,6 @@ const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 const history = require('connect-history-api-fallback');
-const passport = require('passport');
 
 const router = require('./router');
 

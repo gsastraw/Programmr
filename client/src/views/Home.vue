@@ -7,7 +7,7 @@
       <div class="login-button-container">
         <b-button v-b-modal.modal-scrollable class="login-button" variant="dark">Login</b-button>
         <b-modal id="modal-scrollable" scrollable title="Choose a user to log in" hide-footer>
-          <b-list-group>
+          <b-list-group v-if="!loading">
           <b-list-group-item button v-for="user in users" v-bind:key="user.googleId">
             <router-link :to="{ name: 'mainmenu', params: { userId: user.googleId }}">
             <p>Name: {{user.profile.firstName }} {{user.profile.lastName}} id: {{user.googleId}}</p>
@@ -69,12 +69,16 @@ export default {
       lastName: '',
       dob: '',
       users: [],
-      context: null
+      context: null,
+      loading: true
     }
   },
   created() {
     UserService.getAllUsers().then(response => {
+      console.log(response.data)
       this.users = response.data
+      console.log(this.users)
+      this.loading = false
     }).catch(error => {
       alert('No users found')
       console.log(error)
